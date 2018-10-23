@@ -8,5 +8,6 @@ namespace CS_3280_Group_Assignment
 {
     class Invoice
     {
+        //stuff
     }
 }
