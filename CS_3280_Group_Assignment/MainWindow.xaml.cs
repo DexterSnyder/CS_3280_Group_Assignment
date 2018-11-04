@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CS_3280_Group_Assignment.Main;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,19 @@ namespace CS_3280_Group_Assignment
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// This will accually be the main window of this program
+        /// </summary>
+        wndMain main;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            //create the new main window
+            main = new wndMain();
+            this.Hide();
+            main.Show();
         }
     }
 }
