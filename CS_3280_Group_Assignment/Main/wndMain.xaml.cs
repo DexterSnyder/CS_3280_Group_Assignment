@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -30,14 +31,28 @@ namespace CS_3280_Group_Assignment.Main
         /// </summary>
         private bool isAdding;
 
+        /// <summary>
+        /// A list of the invoices
+        /// </summary>
+        private ArrayList invoices;
+
+        /// <summary>
+        /// an instance of the database
+        /// </summary>
+        private clsMainSQL db;
+
         public wndMain()
         {
             try
             {
                 InitializeComponent();
-                loadInvoices();
+            
                 isEditing = false;
                 isAdding = false;
+                invoices = new ArrayList();
+                db = new clsMainSQL();
+
+                loadInvoices();
             }
             catch (Exception ex)
             {
@@ -53,7 +68,11 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
-                //TODO
+                invoices = db.getInvoices();
+                foreach (Invoice item in invoices)
+                {
+                    InvoiceListBox.Items.Add(item);
+                }
             }
             catch (Exception ex)
             {
@@ -66,7 +85,8 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
-                //TODO
+                //Clear List box
+                loadInvoices();
             }
             catch (Exception ex)
             {
@@ -186,6 +206,20 @@ namespace CS_3280_Group_Assignment.Main
             //open the search form
         }
 
+        
+        /// <summary>
+        /// When the selected invoice changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InvoiceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Invoice temp = (Invoice)InvoiceListBox.SelectedItem;
+            InvoiceNumberTextBox.Text = temp.InvoiceNumber.ToString();
+            InvoiceDateTextBox.Text = temp.InvoiceDate;
+            TotalCostTextBox.Text = temp.TotalCost.ToString();
+        }
+
         /// <summary>
         /// Close out application, since this is the main window of the application
         /// </summary>
@@ -221,6 +255,5 @@ namespace CS_3280_Group_Assignment.Main
                                              "HandleError Exception: " + ex.Message);
             }
         }
-
     }//class
 }//namespace
