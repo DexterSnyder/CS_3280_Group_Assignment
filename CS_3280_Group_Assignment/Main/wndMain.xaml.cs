@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CS_3280_Group_Assignment.Items;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -30,14 +32,30 @@ namespace CS_3280_Group_Assignment.Main
         /// </summary>
         private bool isAdding;
 
+        /// <summary>
+        /// A list of the invoices
+        /// </summary>
+        private ArrayList invoices;
+
+        wndItems wndItems;
+
+        /// <summary>
+        /// an instance of the database
+        /// </summary>
+        private clsMainSQL db;
+
         public wndMain()
         {
             try
             {
                 InitializeComponent();
-                loadInvoices();
+
                 isEditing = false;
                 isAdding = false;
+                invoices = new ArrayList();
+                db = new clsMainSQL();
+
+                loadInvoices();
             }
             catch (Exception ex)
             {
@@ -49,11 +67,15 @@ namespace CS_3280_Group_Assignment.Main
         /// <summary>
         /// Loads the invoices into the list box
         /// </summary>
-        private void loadInvoices ()
+        private void loadInvoices()
         {
             try
             {
-                //TODO
+                invoices = db.getInvoices();
+                foreach (Invoice item in invoices)
+                {
+                    InvoiceListBox.Items.Add(item);
+                }
             }
             catch (Exception ex)
             {
@@ -62,11 +84,12 @@ namespace CS_3280_Group_Assignment.Main
             }
         }
 
-        private void refreshInvoices ()
+        private void refreshInvoices()
         {
             try
             {
-                //TODO
+                //Clear List box
+                loadInvoices();
             }
             catch (Exception ex)
             {
@@ -74,7 +97,7 @@ namespace CS_3280_Group_Assignment.Main
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
-       
+
         /// <summary>
         /// Allows the user to edit the selected invoice
         /// </summary>
@@ -152,7 +175,7 @@ namespace CS_3280_Group_Assignment.Main
                     isAdding = false;
                     refreshInvoices();
                 }
-                if(isEditing)
+                if (isEditing)
                 {
                     //send SQL
                     isEditing = false;
@@ -173,7 +196,13 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="e"></param>
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            //open the update form
+            wndItems = new wndItems();
+            //Hide the menu
+            this.Hide();
+            //Show the game form
+            wndItems.ShowDialog();
+            //Show the main form
+            this.Show();
         }
 
         /// <summary>
@@ -184,6 +213,20 @@ namespace CS_3280_Group_Assignment.Main
         private void Search_Click(object sender, RoutedEventArgs e)
         {
             //open the search form
+        }
+
+
+        /// <summary>
+        /// When the selected invoice changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InvoiceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Invoice temp = (Invoice)InvoiceListBox.SelectedItem;
+            InvoiceNumberTextBox.Text = temp.InvoiceNumber.ToString();
+            InvoiceDateTextBox.Text = temp.InvoiceDate;
+            TotalCostTextBox.Text = temp.TotalCost.ToString();
         }
 
         /// <summary>
@@ -221,6 +264,5 @@ namespace CS_3280_Group_Assignment.Main
                                              "HandleError Exception: " + ex.Message);
             }
         }
-
     }//class
 }//namespace
