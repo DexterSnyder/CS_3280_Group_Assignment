@@ -49,7 +49,6 @@ namespace CS_3280_Group_Assignment.Main
             try
             {
                 InitializeComponent();
-
                 isEditing = false;
                 isAdding = false;
                 invoices = new ArrayList();
@@ -214,7 +213,6 @@ namespace CS_3280_Group_Assignment.Main
         {
             //open the search form
         }
-
 
         /// <summary>
         /// When the selected invoice changes

@@ -21,6 +21,7 @@ namespace CS_3280_Group_Assignment
         /// <summary>
         /// total cost
         /// </summary>
+
         protected double totalCost;
 
 
@@ -40,6 +41,7 @@ namespace CS_3280_Group_Assignment
         /// <param name="number">invoice number</param>
         /// <param name="date">Invoice date</param>
         /// <param name="cost">total cost</param>
+
         public Invoice(int number, string date, double cost)
         {
             invoiceNumber = number;
