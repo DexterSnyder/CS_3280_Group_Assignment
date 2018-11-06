@@ -21,13 +21,14 @@ namespace CS_3280_Group_Assignment
         /// <summary>
         /// total cost
         /// </summary>
-       protected double totalCost;
+
+        protected double totalCost;
 
 
-       /// <summary>
-       /// default constructor
-       /// </summary>
-        public Invoice ()
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public Invoice()
         {
             invoiceDate = "";
             invoiceNumber = 0;
@@ -40,7 +41,8 @@ namespace CS_3280_Group_Assignment
         /// <param name="number">invoice number</param>
         /// <param name="date">Invoice date</param>
         /// <param name="cost">total cost</param>
-        public Invoice (int number, string date, double cost)
+
+        public Invoice(int number, string date, double cost)
         {
             invoiceNumber = number;
             invoiceDate = date;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CS_3280_Group_Assignment.Items;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,8 @@ namespace CS_3280_Group_Assignment.Main
         /// </summary>
         private ArrayList invoices;
 
+        wndItems wndItems;
+
         /// <summary>
         /// an instance of the database
         /// </summary>
@@ -46,7 +49,6 @@ namespace CS_3280_Group_Assignment.Main
             try
             {
                 InitializeComponent();
-            
                 isEditing = false;
                 isAdding = false;
                 invoices = new ArrayList();
@@ -64,7 +66,7 @@ namespace CS_3280_Group_Assignment.Main
         /// <summary>
         /// Loads the invoices into the list box
         /// </summary>
-        private void loadInvoices ()
+        private void loadInvoices()
         {
             try
             {
@@ -81,7 +83,7 @@ namespace CS_3280_Group_Assignment.Main
             }
         }
 
-        private void refreshInvoices ()
+        private void refreshInvoices()
         {
             try
             {
@@ -94,7 +96,7 @@ namespace CS_3280_Group_Assignment.Main
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
-       
+
         /// <summary>
         /// Allows the user to edit the selected invoice
         /// </summary>
@@ -172,7 +174,7 @@ namespace CS_3280_Group_Assignment.Main
                     isAdding = false;
                     refreshInvoices();
                 }
-                if(isEditing)
+                if (isEditing)
                 {
                     //send SQL
                     isEditing = false;
@@ -193,7 +195,13 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="e"></param>
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            //open the update form
+            wndItems = new wndItems();
+            //Hide the menu
+            this.Hide();
+            //Show the game form
+            wndItems.ShowDialog();
+            //Show the main form
+            this.Show();
         }
 
         /// <summary>
@@ -206,7 +214,6 @@ namespace CS_3280_Group_Assignment.Main
             //open the search form
         }
 
-        
         /// <summary>
         /// When the selected invoice changes
         /// </summary>
