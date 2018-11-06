@@ -1,0 +1,14 @@
+
+*.ide-wal
+.vs/CS_3280_Group_Assignment/v15/Server/sqlite3/storage.ide-shm
+.vs/CS_3280_Group_Assignment/v15/.suo
+.vs/CS_3280_Group_Assignment/v15/Server/sqlite3/storage.ide
+.vs/CS_3280_Group_Assignment/v15/.suo
+.vs/CS_3280_Group_Assignment/v15/.suo
+.vs/CS_3280_Group_Assignment/v15/Server/sqlite3/storage.ide
+*.ide
+.vs/CS_3280_Group_Assignment/v15/Server/sqlite3/storage.ide-wal
+.vs/CS_3280_Group_Assignment/v15/Server/sqlite3/storage.ide-shm
+.vs/CS_3280_Group_Assignment/v15/Server/sqlite3/storage.ide
+*.cache
+*.lref
