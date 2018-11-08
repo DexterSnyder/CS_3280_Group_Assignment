@@ -37,7 +37,20 @@ namespace CS_3280_Group_Assignment.Main
         /// </summary>
         private ArrayList invoices;
 
+        /// <summary>
+        /// Item screen
+        /// </summary>
         wndItems wndItems;
+
+        /// <summary>
+        /// Items specific to an invoice
+        /// </summary>
+        private ArrayList invoiceItems;
+
+        /// <summary>
+        /// All items
+        /// </summary>
+        private ArrayList allItems;
 
         /// <summary>
         /// an instance of the database
@@ -53,8 +66,13 @@ namespace CS_3280_Group_Assignment.Main
                 isAdding = false;
                 invoices = new ArrayList();
                 db = new clsMainSQL();
+                wndItems = new wndItems();
+                wndItems.Hide();
+                invoiceItems = new ArrayList();
+                allItems = new ArrayList();
 
                 loadInvoices();
+                loadItemComboBox();
             }
             catch (Exception ex)
             {
@@ -83,6 +101,9 @@ namespace CS_3280_Group_Assignment.Main
             }
         }
 
+        /// <summary>
+        /// Refreshes the displayed invoices
+        /// </summary>
         private void refreshInvoices()
         {
             try
@@ -95,6 +116,91 @@ namespace CS_3280_Group_Assignment.Main
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Refreshes the items in the select item box
+        /// </summary>
+        private void refreshItemComboBox()
+        {
+            try
+            {
+                //Clear item list
+                //clear box
+                for (int i = SelectItemBox.Items.Count - 1; i >= 0; --i)
+                {
+                    SelectItemBox.Items.RemoveAt(i);
+                }
+
+                //load with new values
+                loadItemComboBox();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// loads the items in the select item box
+        /// </summary>
+        private void loadItemComboBox()
+        {
+            try
+            {
+                //get the items
+                allItems = db.getAllItems();
+
+                //loop through and add them to the combo box
+                foreach (Item item in allItems)
+                {
+                    SelectItemBox.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Load the list box with all the items in the invoice
+        /// </summary>
+        /// <param name="invoice">Invoice to search for</param>
+        private void loadItemListBox (Invoice invoice)
+        {
+            try
+            {
+                //load the item list box
+                invoiceItems = db.getInvoiceItems(invoice);
+                foreach (Item item in invoiceItems)
+                {
+                    ItemListBox.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Clear and load ItemListBox
+        /// </summary>
+        private void refreshItemListBox(Invoice invoice)
+        {
+            //clear box
+            for (int i = ItemListBox.Items.Count - 1; i >= 0; --i)
+            {
+                ItemListBox.Items.RemoveAt(i);
+            }
+           
+            //load
+            loadItemListBox(invoice);
+
         }
 
         /// <summary>
@@ -195,13 +301,16 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="e"></param>
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            wndItems = new wndItems();
+            
             //Hide the menu
             this.Hide();
-            //Show the game form
+            //Show the item form
             wndItems.ShowDialog();
             //Show the main form
             this.Show();
+
+            //Since the item database may have been updated
+            //Clear out select item box and reload it
         }
 
         /// <summary>
@@ -225,7 +334,16 @@ namespace CS_3280_Group_Assignment.Main
             InvoiceNumberTextBox.Text = temp.InvoiceNumber.ToString();
             InvoiceDateTextBox.Text = temp.InvoiceDate;
             TotalCostTextBox.Text = temp.TotalCost.ToString();
+            refreshItemListBox(temp);
         }
+
+        private void getSearchResult()
+        {
+            //Call method in search that returns an invoice object
+            //Match invoice number with objects in the list
+            //Highlight the selected invoice
+        }
+
 
         /// <summary>
         /// Close out application, since this is the main window of the application
@@ -244,6 +362,7 @@ namespace CS_3280_Group_Assignment.Main
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
+
         /// <summary>
         /// Handle the error.
         /// </summary>
@@ -255,6 +374,42 @@ namespace CS_3280_Group_Assignment.Main
             {
                 //Would write to a file or database here.
                 MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Button click to remove an item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RemoveItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// button to add a item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                
             }
             catch (Exception ex)
             {
