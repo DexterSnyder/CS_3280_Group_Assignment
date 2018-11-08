@@ -32,3 +32,5 @@ C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_G
 C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.g.resources
 C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.Properties.Resources.resources
 C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.csproj.GenerateResource.Cache
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Items\wndItems.g.cs
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Items\wndItems.baml
