@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_3280_Group_Assignment.Main
+namespace CS_3280_Group_Assignment.Search
 {
-    class clsMainLogic
+    class clsSearchSQL
     {
-
-
     }
 }

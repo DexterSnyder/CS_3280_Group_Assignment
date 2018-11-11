@@ -1,4 +1,5 @@
 ﻿using CS_3280_Group_Assignment.Items;
+using CS_3280_Group_Assignment.Search;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,6 +44,8 @@ namespace CS_3280_Group_Assignment.Main
         /// an instance of the database
         /// </summary>
         private clsMainSQL db;
+
+        
 
         public wndMain()
         {
@@ -227,6 +230,16 @@ namespace CS_3280_Group_Assignment.Main
             TotalCostTextBox.Text = temp.TotalCost.ToString();
         }
 
+
+        ///<summary>
+        ///RO RAGUE ADDED THIS: Display the searched for invoiceID
+        /// </summary>
+        public void DisplaySearchedForInvoices(List<clsSearchLogic> lstInvoices)
+        {
+            InvoiceListBox.ItemsSource = lstInvoices;
+        }
+
+
         /// <summary>
         /// Close out application, since this is the main window of the application
         /// </summary>
@@ -262,5 +275,9 @@ namespace CS_3280_Group_Assignment.Main
                                              "HandleError Exception: " + ex.Message);
             }
         }
+
+
+
+
     }//class
 }//namespace

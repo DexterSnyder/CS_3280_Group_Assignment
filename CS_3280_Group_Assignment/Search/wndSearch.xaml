@@ -1,0 +1,21 @@
+﻿<Window x:Class="CS_3280_Group_Assignment.Search.wndSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CS_3280_Group_Assignment.Search"
+        mc:Ignorable="d"
+        Title="wndSearch" Height="400" Width="300">
+    <Grid>
+        <DataGrid x:Name="DisplaySearchedInvoice" HorizontalAlignment="Left" Height="148" Margin="10,148,0,0" VerticalAlignment="Top" Width="272" SelectionMode="Extended" SelectionChanged="DisplaySearchedInvoice_SelectionChanged" />
+        <Label x:Name="InvoiceNumberLabel" Content="Select Invoice Number" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="22" Width="92" FontSize="8px"/>
+        <Label x:Name="InvoiceDisplayLabel" Content="Invoice: " HorizontalAlignment="Left" Margin="93,122,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.507,1.942"/>
+        <ComboBox x:Name="InvoiceDateDropDown" HorizontalAlignment="Left" Margin="107,49,0,0" VerticalAlignment="Top" Width="175" SelectionChanged="InvoiceDateDropDown_SelectionChanged"/>
+        <ComboBox x:Name="InvoiceTotalChargeDropDown" HorizontalAlignment="Left" Margin="107,89,0,0" VerticalAlignment="Top" Width="175" SelectionChanged="InvoiceTotalChargeDropDown_SelectionChanged"/>
+        <ComboBox x:Name="InvoiceNumberDropDown" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="175" SelectionChanged="InvoiceNumberDropDown_SelectionChanged"/>
+        <Label x:Name="InvoiceDateLabel" Content="Select Invoice Date" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Height="22" Width="92" FontSize="8px"/>
+        <Label x:Name="InvoiceTotalChargeLabel" Content="Select Invoice Charge" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Height="22" Width="92" FontSize="8px"/>
+        <Button x:Name="ClearInvoiceButton" Content="Clear" HorizontalAlignment="Left" Margin="174,318,0,0" VerticalAlignment="Top" Width="81" Click="ClearInvoiceButton_Click"/>
+        <Button x:Name="SelectInvoiceButton" Content="Select Invoice" HorizontalAlignment="Left" Margin="41,318,0,0" VerticalAlignment="Top" Width="83" Click="SelectInvoiceButton_Click"/>
+    </Grid>
+</Window>
