@@ -1,6 +1,7 @@
 ﻿using CS_3280_Group_Assignment.Items;
 using CS_3280_Group_Assignment.Main;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -22,12 +23,33 @@ namespace CS_3280_Group_Assignment.Search
     /// </summary>
     public partial class wndSearch : Window
     {
-        #region Properties
+
+        #region Lists and Arrays and Databases
 
         /// <summary>
         /// Create a property for the InvoiceID
         /// </summary>
         public List<clsSearchLogic> lstInvoices { get; set; }
+
+        /// <summary>
+        /// database access
+        /// </summary>
+        private clsSearchSQL db;
+
+        /// <summary>
+        /// list of invoice IDs
+        /// </summary>
+        private ArrayList invoiceIDArray;
+
+        /// <summary>
+        /// list of invoice dates
+        /// </summary>
+        private ArrayList invoiceDatesArray;
+
+        /// <summary>
+        /// list of invoice costs
+        /// </summary>
+        private ArrayList invoiceCostArray;
 
         #endregion
 
@@ -57,18 +79,65 @@ namespace CS_3280_Group_Assignment.Search
 
         public wndSearch()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            ///<summary>
-            ///initialize our clsSearchLogicInst
-            /// </summary>
-            clsSearchLogicInst = new clsSearchLogic();
+                ///<summary>
+                ///initialize our clsSearchLogicInst
+                /// </summary>
+                clsSearchLogicInst = new clsSearchLogic();
 
-            ///<summary>
-            ///this will be used to bind to our list of invoices
-            /// </summary>
-            DisplaySearchedInvoice.ItemsSource = clsSearchLogicInst.GetSearchedInvoices();
+                ///<summary>
+                ///this creates a new instance of our invoiceIDArray
+                ///</summary>
+                invoiceIDArray = new ArrayList();
+
+                ///<summary>
+                ///this creates a new instance of our invoiceDatesArray
+                ///</summary>
+                invoiceDatesArray = new ArrayList();
+
+                ///<summary>
+                ///this creates a new instance of our invoiceCostArray
+                ///</summary>
+                invoiceCostArray = new ArrayList();
+
+                ///<summary>
+                ///this creates a new instance of our data access to our search invoice database
+                ///</summary>
+                db = new clsSearchSQL();
+
+
+                ///<summary>
+                ///initially load our invoice dates in our combo box
+                ///</summary>
+                loadInvoiceDatesInComboBox();
+
+                ///<summary>
+                ///initially load our invoice dates in our combo box
+                ///</summary>
+                loadInvoiceIDsInComboBox();
+
+                ///<summary>
+                ///initially load our invoice costs in our combo box
+                ///</summary>
+                loadInvoiceCostsInComboBox();
+
+                ///<summary>
+                ///this will be used to bind to our list of invoices
+                /// </summary>
+                DisplaySearchedInvoice.ItemsSource = clsSearchLogicInst.GetSearchedInvoices();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+
         }
+
+     
 
         /// <summary>
         /// The button that the user uses to select their invoice
@@ -79,28 +148,28 @@ namespace CS_3280_Group_Assignment.Search
         {
 
             //get the Main window
-            wndMain main = new wndMain();
+           // wndMain main = new wndMain();
 
             //call the method to display the list of the searched for invoice
-            main.DisplaySearchedForInvoices(lstInvoices);
+            //main.DisplaySearchedForInvoices(lstInvoices);
            
 
-            //show the invoice that was searched for
-            main.ShowDialog(); 
+            ///show the invoice that was searched for
+           // main.ShowDialog(); 
         }
 
         private void ClearInvoiceButton_Click(object sender, RoutedEventArgs e)
         {
             //clear out the DataGrid
-            DisplaySearchedInvoice.Items.Clear();
+           // DisplaySearchedInvoice.Items.Clear();
 
             //empty the invoices list, basically reset all the properties
-            lstInvoices.Clear();
+            //lstInvoices.Clear();
 
             //reset all the combo boxes
-            InvoiceDateDropDown.SelectedIndex = -1;
-            InvoiceTotalChargeDropDown.SelectedIndex = -1;
-            InvoiceNumberDropDown.SelectedIndex = -1; 
+           // InvoiceDateDropDown.SelectedIndex = -1;
+           // InvoiceTotalChargeDropDown.SelectedIndex = -1;
+           // InvoiceNumberDropDown.SelectedIndex = -1; 
         }
 
         /// <summary>
@@ -186,6 +255,7 @@ namespace CS_3280_Group_Assignment.Search
         #endregion
 
 
+        #region Other Methods
         /// <summary>
         /// Handle the error.
         /// </summary>
@@ -204,6 +274,82 @@ namespace CS_3280_Group_Assignment.Search
                                              "HandleError Exception: " + ex.Message);
             }
         }
+
+
+        /// <summary>
+        /// Private method that will load all our invoice IDs initially when a user opens the search invoice window
+        /// </summary>
+        private void loadInvoiceIDsInComboBox()
+        {
+            try
+            {
+                //call our method in our clsSearchSQL file that gets all the dates in the database
+                invoiceIDArray = db.getInvoiceIDs();
+
+                //iterate through the list that the clsSearchSQL file populated
+                foreach (Invoice invoice in invoiceIDArray)
+                {
+                    //and put them in our combobox
+                    InvoiceNumberDropDown.Items.Add(invoice);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Private method that will load all our invoice dates initially when a user opens the search invoice window
+        /// </summary>
+        private void loadInvoiceDatesInComboBox()
+        {
+            try
+            {
+                //call our method in our clsSearchSQL file that gets all the dates in the database
+                invoiceDatesArray = db.getInvoiceDates();
+
+                //iterate through the list that the clsSearchSQL file populated
+                foreach (Invoice invoice in invoiceDatesArray)
+                {
+                    //and put them in our combobox
+                    InvoiceDateDropDown.Items.Add(invoice);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Private method that will load all our invoice costs initially when a user opens the search invoice window
+        /// </summary>
+        private void loadInvoiceCostsInComboBox()
+        {
+            try
+            {
+                //call our method in our clsSearchSQL file that gets all the dates in the database
+                invoiceCostArray = db.getInvoiceCosts();
+
+                //iterate through the list that the clsSearchSQL file populated
+                foreach (Invoice invoice in invoiceCostArray)
+                {
+                    //and put them in our combobox
+                    InvoiceTotalChargeDropDown.Items.Add(invoice);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        #endregion
         #endregion
 
     }

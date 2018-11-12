@@ -40,6 +40,8 @@ namespace CS_3280_Group_Assignment.Main
 
         wndItems wndItems;
 
+        wndSearch wndSearch; 
+
         /// <summary>
         /// an instance of the database
         /// </summary>
@@ -201,9 +203,9 @@ namespace CS_3280_Group_Assignment.Main
             wndItems = new wndItems();
             //Hide the menu
             this.Hide();
-            //Show the game form
+            //Show the Items form
             wndItems.ShowDialog();
-            //Show the main form
+            //Show the Items form
             this.Show();
         }
 
@@ -214,7 +216,22 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="e"></param>
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            //open the search form
+            try
+            {
+                //open the search form
+                wndSearch = new wndSearch();
+                //Hide the menu
+                this.Hide();
+                //Show the search form
+                wndSearch.ShowDialog();
+                //Show the search form
+                this.Show();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                           MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
         /// <summary>
