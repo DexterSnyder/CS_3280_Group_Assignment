@@ -309,11 +309,8 @@ namespace CS_3280_Group_Assignment.Main
             
             //Hide the menu
             this.Hide();
-<<<<<<< HEAD
-            //Show the Items form
-=======
+
             //Show the item form
->>>>>>> master
             wndItems.ShowDialog();
             //Show the Items form
             this.Show();
@@ -361,21 +358,18 @@ namespace CS_3280_Group_Assignment.Main
             refreshItemListBox(temp);
         }
 
-<<<<<<< HEAD
-
         ///<summary>
-        ///RO RAGUE ADDED THIS: Display the searched for invoiceID
+        ///Display the searched for invoiceID
         /// </summary>
         public void DisplaySearchedForInvoices(List<clsSearchLogic> lstInvoices)
         {
-            InvoiceListBox.ItemsSource = lstInvoices;
-=======
-        private void getSearchResult()
-        {
-            //Call method in search that returns an invoice object
-            //Match invoice number with objects in the list
-            //Highlight the selected invoice
->>>>>>> master
+            //clear out the invoice list box
+            //Loop over the list and display the results of the search
+            //InvoiceListBox.ItemsSource = lstInvoices;
+
+            //This is the interface method
+
+            //Is this right? The search screen doesn't have visibility into this, where is it called from? -Dex
         }
 
 
@@ -415,12 +409,6 @@ namespace CS_3280_Group_Assignment.Main
                                              "HandleError Exception: " + ex.Message);
             }
         }
-
-<<<<<<< HEAD
-
-
-
-=======
         /// <summary>
         /// Button click to remove an item
         /// </summary>
@@ -456,6 +444,5 @@ namespace CS_3280_Group_Assignment.Main
                                              "HandleError Exception: " + ex.Message);
             }
         }
->>>>>>> master
     }//class
 }//namespace
