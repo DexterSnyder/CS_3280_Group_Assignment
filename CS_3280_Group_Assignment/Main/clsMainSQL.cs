@@ -30,7 +30,13 @@ namespace CS_3280_Group_Assignment.Main
                                              "HandleError Exception: " + ex.Message);
             }
         }//constructor
+<<<<<<< HEAD
+
         public ArrayList getInvoices()
+
+=======
+        public ArrayList getInvoices()
+>>>>>>> master
         {
             ArrayList invoices = new ArrayList();
 
@@ -66,7 +72,14 @@ namespace CS_3280_Group_Assignment.Main
         /// Add an invoice to the database
         /// </summary>
         /// <param name="toAdd">invoice to add</param>
+<<<<<<< HEAD
+
+        public void createInvoice (Invoice toAdd)
+
+
+=======
         public void createInvoice(Invoice toAdd)
+>>>>>>> master
         {
             //set up query
             int iRef = 0;
@@ -82,14 +95,27 @@ namespace CS_3280_Group_Assignment.Main
         /// updates an invoice
         /// </summary>
         /// <param name="toUpdate">Invoice to update</param>
+<<<<<<< HEAD
+
+
         public void updateInvoice(Invoice toUpdate)
+
+=======
+        public void updateInvoice(Invoice toUpdate)
+>>>>>>> master
         {
             //set up query
             int iRef = 0;
             string date = toUpdate.InvoiceDate;
             string cost = toUpdate.TotalCost.ToString();
             string number = toUpdate.InvoiceNumber.ToString();
+<<<<<<< HEAD
+
+            string query = "UPDATE Invoices SET InvoiceDate = #"+date+"#, TotalCost = "+cost+" " +
+
+=======
             string query = "UPDATE Invoices SET InvoiceDate = #" + date + "#, TotalCost = " + cost + " " +
+>>>>>>> master
                 "WHERE InvoiceNum = " + number + ";";
         }
 

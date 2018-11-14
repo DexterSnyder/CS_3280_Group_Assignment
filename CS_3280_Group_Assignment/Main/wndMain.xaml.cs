@@ -1,4 +1,5 @@
 ﻿using CS_3280_Group_Assignment.Items;
+using CS_3280_Group_Assignment.Search;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +43,8 @@ namespace CS_3280_Group_Assignment.Main
         /// </summary>
         wndItems wndItems;
 
+        wndSearch wndSearch; 
+
         /// <summary>
         /// Items specific to an invoice
         /// </summary>
@@ -56,6 +59,8 @@ namespace CS_3280_Group_Assignment.Main
         /// an instance of the database
         /// </summary>
         private clsMainSQL db;
+
+        
 
         public wndMain()
         {
@@ -304,9 +309,13 @@ namespace CS_3280_Group_Assignment.Main
             
             //Hide the menu
             this.Hide();
+<<<<<<< HEAD
+            //Show the Items form
+=======
             //Show the item form
+>>>>>>> master
             wndItems.ShowDialog();
-            //Show the main form
+            //Show the Items form
             this.Show();
 
             //Since the item database may have been updated
@@ -320,7 +329,22 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="e"></param>
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            //open the search form
+            try
+            {
+                //open the search form
+                wndSearch = new wndSearch();
+                //Hide the menu
+                this.Hide();
+                //Show the search form
+                wndSearch.ShowDialog();
+                //Show the search form
+                this.Show();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                           MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
         /// <summary>
@@ -337,11 +361,21 @@ namespace CS_3280_Group_Assignment.Main
             refreshItemListBox(temp);
         }
 
+<<<<<<< HEAD
+
+        ///<summary>
+        ///RO RAGUE ADDED THIS: Display the searched for invoiceID
+        /// </summary>
+        public void DisplaySearchedForInvoices(List<clsSearchLogic> lstInvoices)
+        {
+            InvoiceListBox.ItemsSource = lstInvoices;
+=======
         private void getSearchResult()
         {
             //Call method in search that returns an invoice object
             //Match invoice number with objects in the list
             //Highlight the selected invoice
+>>>>>>> master
         }
 
 
@@ -382,6 +416,11 @@ namespace CS_3280_Group_Assignment.Main
             }
         }
 
+<<<<<<< HEAD
+
+
+
+=======
         /// <summary>
         /// Button click to remove an item
         /// </summary>
@@ -417,5 +456,6 @@ namespace CS_3280_Group_Assignment.Main
                                              "HandleError Exception: " + ex.Message);
             }
         }
+>>>>>>> master
     }//class
 }//namespace

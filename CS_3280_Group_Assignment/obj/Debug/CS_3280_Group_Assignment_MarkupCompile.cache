@@ -4,17 +4,21 @@
 winexe
 C#
 .cs
-C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\
+C:\Users\W01195663\Documents\GitHub\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\
 CS_3280_Group_Assignment
 none
 false
 DEBUG;TRACE
-C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\App.xaml
-3-1250846507
+C:\Users\W01195663\Documents\GitHub\CS_3280_Group_Assignment\CS_3280_Group_Assignment\App.xaml
+4-1365973282
 
+<<<<<<< HEAD
+172057880724
+=======
 141769349229
+>>>>>>> master
 131569487696
-Items\wndItems.xaml;MainWindow.xaml;Main\wndMain.xaml;
+Items\wndItems.xaml;MainWindow.xaml;Main\wndMain.xaml;Search\wndSearch.xaml;
 
 False
 
