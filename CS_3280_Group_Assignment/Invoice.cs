@@ -121,7 +121,7 @@ namespace CS_3280_Group_Assignment
         /// <returns></returns>
         public override string ToString()
         {
-            return invoiceNumber + "      " + invoiceDate + "      " + totalCost;
+            return invoiceNumber + "\t" + invoiceDate + "\t" + totalCost;
         }
 
 

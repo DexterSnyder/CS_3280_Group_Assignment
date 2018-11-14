@@ -32,6 +32,7 @@ C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_G
 C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.g.resources
 C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.Properties.Resources.resources
 C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.csproj.GenerateResource.Cache
+<<<<<<< HEAD
 C:\Users\W01195663\Documents\GitHub\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Items\wndItems.g.cs
 C:\Users\W01195663\Documents\GitHub\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\MainWindow.g.cs
 C:\Users\W01195663\Documents\GitHub\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Main\wndMain.g.cs
@@ -77,3 +78,7 @@ C:\Users\CSSTUDENT4\Downloads\CS_3280_Group_Assignment\CS_3280_Group_Assignment\
 C:\Users\CSSTUDENT4\Downloads\CS_3280_Group_Assignment\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.csproj.GenerateResource.Cache
 C:\Users\CSSTUDENT4\Downloads\CS_3280_Group_Assignment\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.exe
 C:\Users\CSSTUDENT4\Downloads\CS_3280_Group_Assignment\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.pdb
+=======
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Items\wndItems.g.cs
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Items\wndItems.baml
+>>>>>>> master
