@@ -49,6 +49,27 @@ namespace CS_3280_Group_Assignment
             totalCost = cost;
         }
 
+        public Invoice(string date)
+        {
+            
+            invoiceDate = date;
+            
+        }
+
+        public Invoice(int number)
+        {
+
+            invoiceNumber = number;
+
+        }
+        public Invoice(double cost)
+        {
+
+            totalCost = cost;
+
+        }
+
+
         /// <summary>
         /// Invoice Number
         /// </summary>
