@@ -77,6 +77,9 @@ namespace CS_3280_Group_Assignment.Search
 
         #region Methods
 
+        /// <summary>
+        /// Initialize/construtor
+        /// </summary>
         public wndSearch()
         {
             try
@@ -132,7 +135,8 @@ namespace CS_3280_Group_Assignment.Search
             }
             catch (Exception ex)
             {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
 
         }
@@ -184,9 +188,10 @@ namespace CS_3280_Group_Assignment.Search
             {
                 DataGrid temp = (DataGrid)sender;
 
+                //if our selected item is not null
                 if (temp.SelectedItem == null)
                 {
-
+                    //convert all our values to the necessary types
                      invoiceID = Convert.ToInt32(temp.SelectedCells[0]);
                      invoiceDate = DateTime.Parse((temp.SelectedCells[1]).ToString());
                      invoiceCharge = Convert.ToDouble(temp.SelectedCells[2]);
@@ -211,7 +216,7 @@ namespace CS_3280_Group_Assignment.Search
             
         }
 
-        #region ComboBoxes
+        #region ComboBoxes Methods
 
         /// <summary>
         /// when the user selects a specific invoiceID
