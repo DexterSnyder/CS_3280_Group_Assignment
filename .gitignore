@@ -12,3 +12,7 @@
 .vs/CS_3280_Group_Assignment/v15/Server/sqlite3/storage.ide
 *.cache
 *.lref
+*manifest
+*.dll
+*.nlp
+*.baml
