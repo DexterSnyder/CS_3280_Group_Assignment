@@ -25,6 +25,11 @@ namespace CS_3280_Group_Assignment.Search
         private OleDbCommand cmd;
 
         /// <summary>
+        /// an Invoice object to help get some methods
+        /// </summary>
+        private Invoice inv; 
+
+        /// <summary>
         /// Array Lists to help store our needed data for the Search Window Combo-boxes
         /// </summary>
         private ArrayList invoiceDates;
@@ -43,7 +48,10 @@ namespace CS_3280_Group_Assignment.Search
                 //initialize our lists
                 invoiceDates = new ArrayList();
                 invoiceIDs = new ArrayList();
-                invoiceCosts = new ArrayList(); 
+                invoiceCosts = new ArrayList();
+
+                //initialize our Invoice inv
+                inv = new Invoice(); 
             }
             catch (Exception ex)
             {
@@ -74,6 +82,7 @@ namespace CS_3280_Group_Assignment.Search
                 {
                     //get the invoice ID as a string
                     string sinvoiceID = ds.Tables[0].Rows[i]["InvoiceNum"].ToString();
+
 
                     //conver the invoice ID to an int
                     int invoiceID = Convert.ToInt32(sinvoiceID); 
@@ -114,13 +123,12 @@ namespace CS_3280_Group_Assignment.Search
 
                 ds = db.ExecuteSQLStatement(query, ref iRef);
 
-
                 //iterate through all the rows
                 for (int i = 0; i < iRef; i++)
                 {
                     //get the invoice date as a string
                     string invoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString();
-
+                    
                     //create an Invoice object out of the invoice date
                     Invoice iDate = new Invoice(invoiceDate);
 
@@ -160,13 +168,16 @@ namespace CS_3280_Group_Assignment.Search
                 for (int i = 0; i < iRef; i++)
                 {
                     //get the invoice cost as a string
-                    string sinvoiceCost = ds.Tables[0].Rows[i]["TotalCost"].ToString();
+                    string sinvoiceCost = (ds.Tables[0].Rows[i]["TotalCost"]).ToString();
 
+                    
                     //convert the invoice cost to a double
                     double invoiceCost = Convert.ToDouble(sinvoiceCost);
 
                     //create an Invoice object
                     Invoice iCost = new Invoice(invoiceCost);
+
+                    
 
                     //add the object to our invoice costs list
                     invoiceCosts.Add(iCost);
@@ -184,6 +195,8 @@ namespace CS_3280_Group_Assignment.Search
             }
             
         }
+
+
 
 #endregion
     }

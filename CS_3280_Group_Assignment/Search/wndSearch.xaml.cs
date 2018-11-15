@@ -68,6 +68,11 @@ namespace CS_3280_Group_Assignment.Search
         /// </summary>
         double invoiceCharge = 0.0;
 
+
+        /// <summary>
+        /// an Invoice object to help get some methods
+        /// </summary>
+        private Invoice inv;
         /// <summary>
         /// Get our clsSearchLogic class
         /// </summary>
@@ -111,6 +116,10 @@ namespace CS_3280_Group_Assignment.Search
                 ///</summary>
                 db = new clsSearchSQL();
 
+                ///<summary>
+                ///this creates a new instance of our invoice class
+                /// </summary>
+                inv = new Invoice(); 
 
                 ///<summary>
                 ///initially load our invoice dates in our combo box

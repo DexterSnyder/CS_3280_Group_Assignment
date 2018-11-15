@@ -24,6 +24,11 @@ namespace CS_3280_Group_Assignment
 
         protected double totalCost;
 
+        /// <summary>
+        /// a public string for the format of the string, tried to write an overload ToString() but it didn't work so well 
+        /// </summary>
+        public string format;
+
 
         /// <summary>
         /// default constructor
@@ -33,6 +38,7 @@ namespace CS_3280_Group_Assignment
             invoiceDate = "";
             invoiceNumber = 0;
             totalCost = 0;
+            format = ""; 
         }
 
         /// <summary>
@@ -51,20 +57,20 @@ namespace CS_3280_Group_Assignment
 
         public Invoice(string date)
         {
-            
+            format = "invoiceDate"; //set how we want to format the object in the combo-box
             invoiceDate = date;
             
         }
 
         public Invoice(int number)
         {
-
+            format = "invoiceID"; //set how we want to format the object in the combo-box
             invoiceNumber = number;
 
         }
         public Invoice(double cost)
         {
-
+            format = "totalCost";   //set how we want to format the object in the combo-box
             totalCost = cost;
 
         }
@@ -121,8 +127,39 @@ namespace CS_3280_Group_Assignment
         /// <returns></returns>
         public override string ToString()
         {
-            return invoiceNumber + "\t" + invoiceDate + "\t" + totalCost;
+
+            if(format == "invoiceDate")
+            {
+                return invoiceDate; 
+            }
+            if (format == "totalCost")
+            {
+                return totalCost.ToString();
+            }
+            if (format == "invoiceID")
+            {
+                return invoiceNumber.ToString();
+            }
+            else
+            {
+                return invoiceNumber + "\t" + invoiceDate + "\t" + totalCost;
+            }
         }
+
+        ///<summary>
+        ///original attempt to overrride the ToString method...doesn't quite work
+        /// </summary>
+      /* public string ToString(string format, Object str)
+        {
+            switch (format)
+            {
+                case "invoiceID": return str.ToString();
+                case "invoiceDate": return str.ToString();
+                case "totalCost": return str.ToString(); 
+            }
+
+            return this.ToString(); 
+        }*/
 
 
     }
