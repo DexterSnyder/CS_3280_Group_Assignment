@@ -74,24 +74,40 @@ namespace CS_3280_Group_Assignment.Items
 
         public void createItems(Item toAdd)
         {
-            int iRef = 0;
-            string desc = toAdd.ItemDesc;
-            string cost = toAdd.Cost.ToString();
-            string query = "INSERT INTO Items(ItemDesc, Cost) Values(#" + desc + "#, " + cost + ");";
+            try
+            {
+                int iRef = 0;
+                string desc = toAdd.ItemDesc;
+                string cost = toAdd.Cost.ToString();
+                string query = "INSERT INTO Items(ItemDesc, Cost) Values(#" + desc + "#, " + cost + ");";
 
-            iRef = db.ExecuteNonQuery(query);
+                iRef = db.ExecuteNonQuery(query);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
 
         }
 
 
         public void updateItem(Item toUpdate)
         {
-            int iRef = 0;
-            string code = toUpdate.ItemCode.ToString();
-            string desc = toUpdate.ItemDesc;
-            string cost = toUpdate.Cost.ToString();
-            string query = "UPDATE Item SET itemDesc = #" + desc + "#, Cost = " + cost + " " +
-                "WHERE ItemCode = " + code + ";";
+            try
+            {
+                int iRef = 0;
+                string code = toUpdate.ItemCode.ToString();
+                string desc = toUpdate.ItemDesc;
+                string cost = toUpdate.Cost.ToString();
+                string query = "UPDATE Item SET itemDesc = #" + desc + "#, Cost = " + cost + " " +
+                    "WHERE ItemCode = " + code + ";";
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
 
         }
 

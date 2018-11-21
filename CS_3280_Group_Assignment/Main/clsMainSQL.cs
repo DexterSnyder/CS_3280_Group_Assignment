@@ -70,14 +70,22 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="toAdd">invoice to add</param>
         public void createInvoice (Invoice toAdd)
         {
-            //set up query
-            int iRef = 0;
-            string date = toAdd.InvoiceDate;
-            string cost = toAdd.TotalCost.ToString();
-            string query = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#" + date + "#, " + cost + ");";
+            try
+            {
+                //set up query
+                int iRef = 0;
+                string date = toAdd.InvoiceDate;
+                string cost = toAdd.TotalCost.ToString();
+                string query = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#" + date + "#, " + cost + ");";
 
-            //execute
-            iRef = db.ExecuteNonQuery(query);
+                //execute
+                iRef = db.ExecuteNonQuery(query);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -86,14 +94,23 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="toUpdate">Invoice to update</param>
         public void updateInvoice(Invoice toUpdate)
         {
-            //set up query
-            int iRef = 0;
-            string date = toUpdate.InvoiceDate;
-            string cost = toUpdate.TotalCost.ToString();
-            string number = toUpdate.InvoiceNumber.ToString();
+            try
+            {
 
-            string query = "UPDATE Invoices SET InvoiceDate = #" + date + "#, TotalCost = " + cost + " " +
-                "WHERE InvoiceNum = " + number + ";";
+                //set up query
+                int iRef = 0;
+                string date = toUpdate.InvoiceDate;
+                string cost = toUpdate.TotalCost.ToString();
+                string number = toUpdate.InvoiceNumber.ToString();
+
+                string query = "UPDATE Invoices SET InvoiceDate = #" + date + "#, TotalCost = " + cost + " " +
+                    "WHERE InvoiceNum = " + number + ";";
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
 
         public ArrayList getInvoiceItems(Invoice invoice)
@@ -135,26 +152,32 @@ namespace CS_3280_Group_Assignment.Main
         public ArrayList getAllItems ()
         {
             ArrayList allItems = new ArrayList();
-
-            
-            //set up query
-            DataSet ds;
-            int iRef = 0;
-            string query = "SELECT  ItemCode, ItemDesc, Cost FROM ItemDesc;";
-
-            //execute
-            ds = db.ExecuteSQLStatement(query, ref iRef);
-
-            //assign objects
-            for (int i = 0; i < iRef; i++)
+            try
             {
-                string code = ds.Tables[0].Rows[i]["ItemCode"].ToString();
-                string description = ds.Tables[0].Rows[i]["ItemDesc"].ToString();
-                double cost = Int32.Parse(ds.Tables[0].Rows[i]["Cost"].ToString());
-                Item item = new Item(code, description, cost);
-                allItems.Add(item);
-            }
 
+                //set up query
+                DataSet ds;
+                int iRef = 0;
+                string query = "SELECT  ItemCode, ItemDesc, Cost FROM ItemDesc;";
+
+                //execute
+                ds = db.ExecuteSQLStatement(query, ref iRef);
+
+                //assign objects
+                for (int i = 0; i < iRef; i++)
+                {
+                    string code = ds.Tables[0].Rows[i]["ItemCode"].ToString();
+                    string description = ds.Tables[0].Rows[i]["ItemDesc"].ToString();
+                    double cost = Int32.Parse(ds.Tables[0].Rows[i]["Cost"].ToString());
+                    Item item = new Item(code, description, cost);
+                    allItems.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
             return allItems;
         }
     }//class

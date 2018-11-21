@@ -93,6 +93,8 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
+                //TODO -> convert to the way it is done in the Advanced WPF Concepts video////////////////////////////////
+
                 invoices = db.getInvoices();
                 foreach (Invoice item in invoices)
                 {
@@ -197,14 +199,22 @@ namespace CS_3280_Group_Assignment.Main
         /// </summary>
         private void refreshItemListBox(Invoice invoice)
         {
-            //clear box
-            for (int i = ItemListBox.Items.Count - 1; i >= 0; --i)
+            try
             {
-                ItemListBox.Items.RemoveAt(i);
+                //clear box
+                for (int i = ItemListBox.Items.Count - 1; i >= 0; --i)
+                {
+                    ItemListBox.Items.RemoveAt(i);
+                }
+
+                //load
+                loadItemListBox(invoice);
             }
-           
-            //load
-            loadItemListBox(invoice);
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
 
         }
 
@@ -306,17 +316,25 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="e"></param>
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            //Hide the menu
-            this.Hide();
 
-            //Show the item form
-            wndItems.ShowDialog();
-            //Show the Items form
-            this.Show();
+            try
+            {
+                //Hide the menu
+                this.Hide();
 
-            //Since the item database may have been updated
-            //Clear out select item box and reload it
+                //Show the item form
+                wndItems.ShowDialog();
+                //Show the Items form
+                this.Show();
+
+                //Since the item database may have been updated
+                //Clear out select item box and reload it
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
         /// <summary>
@@ -351,11 +369,19 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="e"></param>
         private void InvoiceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Invoice temp = (Invoice)InvoiceListBox.SelectedItem;
-            InvoiceNumberTextBox.Text = temp.InvoiceNumber.ToString();
-            InvoiceDateTextBox.Text = temp.InvoiceDate;
-            TotalCostTextBox.Text = temp.TotalCost.ToString();
-            refreshItemListBox(temp);
+            try
+            {
+                Invoice temp = (Invoice)InvoiceListBox.SelectedItem;
+                InvoiceNumberTextBox.Text = temp.InvoiceNumber.ToString();
+                InvoiceDateTextBox.Text = temp.InvoiceDate;
+                TotalCostTextBox.Text = temp.TotalCost.ToString();
+                refreshItemListBox(temp);
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
         ///<summary>
@@ -363,13 +389,21 @@ namespace CS_3280_Group_Assignment.Main
         /// </summary>
         public void DisplaySearchedForInvoices(List<clsSearchLogic> lstInvoices)
         {
-            //clear out the invoice list box
-            //Loop over the list and display the results of the search
-            //InvoiceListBox.ItemsSource = lstInvoices;
+            try
+            {
 
-            //This is the interface method
 
-            //Is this right? The search screen doesn't have visibility into this, where is it called from? -Dex
+                //There are a couple ways we could implement this, but this will be passed from the button event
+
+                //This is the interface method
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+
+
         }
 
 
