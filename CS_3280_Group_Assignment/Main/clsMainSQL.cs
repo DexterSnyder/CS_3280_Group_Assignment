@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -31,10 +32,10 @@ namespace CS_3280_Group_Assignment.Main
             }
         }//constructor
 
-        public ArrayList getInvoices()
+        public ObservableCollection<Invoice> getInvoices()
 
         {
-            ArrayList invoices = new ArrayList();
+            ObservableCollection<Invoice> invoices = new ObservableCollection<Invoice>();
 
             try
             { 
@@ -113,9 +114,9 @@ namespace CS_3280_Group_Assignment.Main
             }
         }
 
-        public ArrayList getInvoiceItems(Invoice invoice)
+        public ObservableCollection<Item> getInvoiceItems(Invoice invoice)
         {
-            ArrayList items = new ArrayList();
+            ObservableCollection<Item> items = new ObservableCollection<Item>();
 
             try
             {
@@ -149,9 +150,9 @@ namespace CS_3280_Group_Assignment.Main
             return items;
         }
 
-        public ArrayList getAllItems ()
+        public ObservableCollection<Item> getAllItems ()
         {
-            ArrayList allItems = new ArrayList();
+            ObservableCollection<Item> allItems = new ObservableCollection<Item>();
             try
             {
 
