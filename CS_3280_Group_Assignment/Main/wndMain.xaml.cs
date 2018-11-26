@@ -3,6 +3,7 @@ using CS_3280_Group_Assignment.Search;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -33,34 +34,26 @@ namespace CS_3280_Group_Assignment.Main
         /// </summary>
         private bool isAdding;
 
-        /// <summary>
-        /// A list of the invoices
-        /// </summary>
-        private ArrayList invoices;
 
         /// <summary>
         /// Item screen
         /// </summary>
-        wndItems wndItems;
-
-        wndSearch wndSearch; 
+        private wndItems wndItems;
 
         /// <summary>
-        /// Items specific to an invoice
+        /// Search Screen
         /// </summary>
-        private ArrayList invoiceItems;
+        private wndSearch wndSearch;
 
         /// <summary>
-        /// All items
+        /// The current working copy of an invoice
         /// </summary>
-        private ArrayList allItems;
+        private Invoice workingInvoice;
 
         /// <summary>
-        /// an instance of the database
+        /// Buisness logic
         /// </summary>
-        private clsMainSQL db;
-
-        
+        private clsMainLogic logic;
 
         public wndMain()
         {
@@ -69,12 +62,10 @@ namespace CS_3280_Group_Assignment.Main
                 InitializeComponent();
                 isEditing = false;
                 isAdding = false;
-                invoices = new ArrayList();
-                db = new clsMainSQL();
                 wndItems = new wndItems();
                 wndItems.Hide();
-                invoiceItems = new ArrayList();
-                allItems = new ArrayList();
+                workingInvoice = new Invoice();
+                logic = new clsMainLogic();
 
                 loadInvoices();
                 loadItemComboBox();
@@ -93,30 +84,8 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
-                //TODO -> convert to the way it is done in the Advanced WPF Concepts video////////////////////////////////
-
-                invoices = db.getInvoices();
-                foreach (Invoice item in invoices)
-                {
-                    InvoiceListBox.Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Refreshes the displayed invoices
-        /// </summary>
-        private void refreshInvoices()
-        {
-            try
-            {
-                //Clear List box
-                loadInvoices();
+                //Bind GUI to the list in the logic portion
+                InvoiceListBox.ItemsSource = logic.invoices;
             }
             catch (Exception ex)
             {
@@ -156,14 +125,9 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
-                //get the items
-                allItems = db.getAllItems();
 
-                //loop through and add them to the combo box
-                foreach (Item item in allItems)
-                {
-                    SelectItemBox.Items.Add(item);
-                }
+                //Bind all items list in logic to GUI  
+                SelectItemBox.ItemsSource = logic.allItems;
             }
             catch (Exception ex)
             {
@@ -180,42 +144,17 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
-                //load the item list box
-                invoiceItems = db.getInvoiceItems(invoice);
-                foreach (Item item in invoiceItems)
-                {
-                    ItemListBox.Items.Add(item);
-                }
+                //Reset the list in the logic
+                logic.getInvoiceItems(invoice);
+
+                //bind list in logic to the GUI
+                ItemListBox.ItemsSource = logic.invoiceItems;
             }
             catch (Exception ex)
             {
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
-        }
-
-        /// <summary>
-        /// Clear and load ItemListBox
-        /// </summary>
-        private void refreshItemListBox(Invoice invoice)
-        {
-            try
-            {
-                //clear box
-                for (int i = ItemListBox.Items.Count - 1; i >= 0; --i)
-                {
-                    ItemListBox.Items.RemoveAt(i);
-                }
-
-                //load
-                loadItemListBox(invoice);
-            }
-            catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
-            }
-
         }
 
         /// <summary>
@@ -229,8 +168,21 @@ namespace CS_3280_Group_Assignment.Main
             {
                 isEditing = true;
                 //get selection
-                //unlock text boxes
-                refreshInvoices();
+                //unlock text boxes and buttons
+                AddItemButton.IsEnabled = true;
+                RemoveItemButton.IsEnabled = true;
+                SaveButton.IsEnabled = true;
+                InvoiceDateTextBox.IsReadOnly = false;
+                SelectItemBox.IsEnabled = true;
+
+                //Lock controls
+                NewInvoiceButton.IsEnabled = false;
+                DeleteInvoiceButton.IsEnabled = false;
+                EditInvoiceButton.IsEnabled = false;
+                InvoiceListBox.IsEnabled = false;
+
+                //set working invoice equal to currently selected
+                workingInvoice = (Invoice)InvoiceListBox.SelectedItem;
             }
             catch (Exception ex)
             {
@@ -250,7 +202,7 @@ namespace CS_3280_Group_Assignment.Main
             {
                 //get selection
                 //delete selection
-                refreshInvoices();
+                loadInvoices();
             }
             catch (Exception ex)
             {
@@ -268,9 +220,33 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
+                //unlock UI controls
+                AddItemButton.IsEnabled = true;
+                RemoveItemButton.IsEnabled = true;
+                SaveButton.IsEnabled = true;
+                InvoiceDateTextBox.IsReadOnly = false;
+                SelectItemBox.IsEnabled = true;
+
+                //Lock controls
+                NewInvoiceButton.IsEnabled = false;
+                DeleteInvoiceButton.IsEnabled = false;
+                EditInvoiceButton.IsEnabled = false;
+                InvoiceListBox.IsEnabled = false;
+
+                //set up text boxes
+                InvoiceNumberTextBox.Text = "TBD";
+                InvoiceDateTextBox.Text = "";
+
+                //clear out items
+                logic.invoiceItems.Clear();
+
+                //Clear out the working invoice
+                workingInvoice.TotalCost = 0;
+                workingInvoice.InvoiceNumber = 0;
+                workingInvoice.InvoiceDate = "";
+
                 isAdding = true;
-                //unlock textboxes
-                //set invoice number
+                
             }
             catch (Exception ex)
             {
@@ -288,19 +264,34 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
-                //get the data
+                //if the user is adding a new invoice
                 if (isAdding)
                 {
-                    //send SQL
+                    //save to the database
+                    logic.saveNewInvoice(workingInvoice);
                     isAdding = false;
-                    refreshInvoices();
+                    loadInvoices();
                 }
                 if (isEditing)
                 {
-                    //send SQL
+                    //update the database
+                    logic.updateInvoice(workingInvoice);
                     isEditing = false;
-                    refreshInvoices();
+                    loadInvoices();
                 }
+
+                //Lock UI controls
+                AddItemButton.IsEnabled = false;
+                RemoveItemButton.IsEnabled = false;
+                SaveButton.IsEnabled = false;
+                InvoiceDateTextBox.IsReadOnly = true;
+                SelectItemBox.IsEnabled = false;
+
+                //unlock UI controls
+                NewInvoiceButton.IsEnabled = true;
+                DeleteInvoiceButton.IsEnabled = true;
+                EditInvoiceButton.IsEnabled = true;
+                InvoiceListBox.IsEnabled = true;
             }
             catch (Exception ex)
             {
@@ -375,7 +366,7 @@ namespace CS_3280_Group_Assignment.Main
                 InvoiceNumberTextBox.Text = temp.InvoiceNumber.ToString();
                 InvoiceDateTextBox.Text = temp.InvoiceDate;
                 TotalCostTextBox.Text = temp.TotalCost.ToString();
-                refreshItemListBox(temp);
+                loadItemListBox(temp);
             }
             catch (Exception ex)
             {
@@ -452,7 +443,15 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
+                //get the selected item
+                Item temp = (Item)ItemListBox.SelectedItem;
 
+                //remove it
+                logic.invoiceItems.Remove(temp);
+
+                workingInvoice.TotalCost = logic.calcTotalCost();
+                TotalCostTextBox.Text = workingInvoice.TotalCost.ToString();
+                
             }
             catch (Exception ex)
             {
@@ -470,7 +469,15 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
-                
+                //get the selected item
+                Item temp = (Item)SelectItemBox.SelectedItem;
+
+                //remove it
+                logic.invoiceItems.Add(temp);
+
+                workingInvoice.TotalCost = logic.calcTotalCost();
+                TotalCostTextBox.Text = workingInvoice.TotalCost.ToString();
+
             }
             catch (Exception ex)
             {

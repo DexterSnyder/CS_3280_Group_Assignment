@@ -124,6 +124,6 @@ namespace CS_3280_Group_Assignment
             return invoiceNumber + "\t" + invoiceDate + "\t" + totalCost;
         }
 
-
+        
     }
 }

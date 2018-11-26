@@ -63,11 +63,11 @@ namespace CS_3280_Group_Assignment
         {
             get
             {
-                return ItemDesc;
+                return itemDesc;
             }
             set
             {
-                ItemDesc = value;
+                itemDesc = value;
             }
         }
 

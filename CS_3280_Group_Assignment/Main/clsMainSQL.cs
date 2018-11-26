@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -31,10 +32,10 @@ namespace CS_3280_Group_Assignment.Main
             }
         }//constructor
 
-        public ArrayList getInvoices()
+        public ObservableCollection<Invoice> getInvoices()
 
         {
-            ArrayList invoices = new ArrayList();
+            ObservableCollection<Invoice> invoices = new ObservableCollection<Invoice>();
 
             try
             { 
@@ -113,9 +114,14 @@ namespace CS_3280_Group_Assignment.Main
             }
         }
 
-        public ArrayList getInvoiceItems(Invoice invoice)
+        /// <summary>
+        /// Gets all items related to specfic invoice
+        /// </summary>
+        /// <param name="invoice">The invoice to get items for</param>
+        /// <returns>List of items</returns>
+        public ObservableCollection<Item> getInvoiceItems(Invoice invoice)
         {
-            ArrayList items = new ArrayList();
+            ObservableCollection<Item> items = new ObservableCollection<Item>();
 
             try
             {
@@ -149,12 +155,15 @@ namespace CS_3280_Group_Assignment.Main
             return items;
         }
 
-        public ArrayList getAllItems ()
+        /// <summary>
+        /// Get all items in the database
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<Item> getAllItems ()
         {
-            ArrayList allItems = new ArrayList();
+            ObservableCollection<Item> allItems = new ObservableCollection<Item>();
             try
             {
-
                 //set up query
                 DataSet ds;
                 int iRef = 0;
@@ -179,6 +188,71 @@ namespace CS_3280_Group_Assignment.Main
                                              "HandleError Exception: " + ex.Message);
             }
             return allItems;
+        }
+
+        //---------------------------------------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Add a new invoice with line items to the database
+        /// </summary>
+        /// <param name="invoice">The invoice to add</param>
+        /// <param name="items">The items to add</param>
+        /// <returns>New Invoice ID</returns>
+        public int addNewInvoice (Invoice invoice, ObservableCollection<Item> items)
+        {
+            int newInvoiceNumber = 0;
+            try
+            {
+                int iRef = 0;
+                DataSet ds;
+                string query = "";
+
+                //insert the invoice
+                query = "INSERT INTO PASSENGER() VALUES('')";
+
+                iRef = db.ExecuteNonQuery(query);
+
+                //Get the ID back
+
+
+                //insert the line Items
+                query = "INSERT INTO PASSENGER() VALUES('')";
+
+                iRef = db.ExecuteNonQuery(query);
+
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
+            return newInvoiceNumber;
+        }
+
+        /// <summary>
+        /// Updates the line items of a specific invoice
+        /// </summary>
+        /// <param name="invoice">Invoice to update</param>
+        /// <param name="items">New item list</param>
+        public void updateInvoice(Invoice invoice, ObservableCollection<Item> items)
+        {
+            try
+            {
+                int iRef = 0;
+                DataSet ds;
+                string query = "";
+
+                //Delete the existing line item records that match the invoice ID
+
+                //Insert new records from the items list
+
+                iRef = db.ExecuteNonQuery(query);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
     }//class
 }//namespace
