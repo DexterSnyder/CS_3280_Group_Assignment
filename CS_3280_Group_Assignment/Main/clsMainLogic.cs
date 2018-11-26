@@ -43,21 +43,61 @@ namespace CS_3280_Group_Assignment.Main
             getAllItems();
         }
 
+        /// <summary>
+        /// Get invoices from the database
+        /// </summary>
         public void getInvoices()
         {
             invoices = db.getInvoices();
         }
 
+        /// <summary>
+        /// Get a list of all items from the database
+        /// </summary>
         public void getAllItems()
         {
             allItems = db.getAllItems();
         }
 
+        /// <summary>
+        /// Get items related to a specfic invoice from the database
+        /// </summary>
+        /// <param name="invoice"></param>
         public void getInvoiceItems(Invoice invoice)
         {
             invoiceItems = db.getInvoiceItems(invoice);
         }
         
-    
+        /// <summary>
+        /// Save a new invoice to the database
+        /// </summary>
+        /// <param name="invoice">Invoice to sace</param>
+        /// <returns>The ID of the new invoice</returns>
+        public int saveNewInvoice (Invoice invoice)
+        {
+            int invoiceId = 0;
+
+            db.addNewInvoice(invoice, invoiceItems);
+
+            return invoiceId;
+        }
+
+        /// <summary>
+        /// Updates a specific invoice with the items in the invoice items list
+        /// </summary>
+        /// <param name="invoice">Invoice to update</param>
+        public void updateInvoice(Invoice invoice)
+        {
+            db.updateInvoice(invoice, invoiceItems);
+        }
+
+        /// <summary>
+        /// Calculats the total cost of the selected invoice
+        /// </summary>
+        /// <returns></returns>
+        public double calcTotalCost()
+        {
+            return 0;
+        }
     }
 }
