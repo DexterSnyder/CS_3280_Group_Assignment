@@ -48,7 +48,15 @@ namespace CS_3280_Group_Assignment.Main
         /// </summary>
         public void getInvoices()
         {
-            invoices = db.getInvoices();
+            try
+            {
+                invoices = db.getInvoices();
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -56,7 +64,15 @@ namespace CS_3280_Group_Assignment.Main
         /// </summary>
         public void getAllItems()
         {
-            allItems = db.getAllItems();
+            try
+            {
+                allItems = db.getAllItems();
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -65,7 +81,15 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="invoice"></param>
         public void getInvoiceItems(Invoice invoice)
         {
-            invoiceItems = db.getInvoiceItems(invoice);
+            try
+            {
+                invoiceItems = db.getInvoiceItems(invoice);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
         
         /// <summary>
@@ -76,9 +100,15 @@ namespace CS_3280_Group_Assignment.Main
         public int saveNewInvoice (Invoice invoice)
         {
             int invoiceId = 0;
-
-            db.addNewInvoice(invoice, invoiceItems);
-
+            try
+            {
+                db.addNewInvoice(invoice, invoiceItems); 
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
             return invoiceId;
         }
 
@@ -88,16 +118,59 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="invoice">Invoice to update</param>
         public void updateInvoice(Invoice invoice)
         {
-            db.updateInvoice(invoice, invoiceItems);
+            try
+            {
+                db.updateInvoice(invoice, invoiceItems);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
 
         /// <summary>
         /// Calculats the total cost of the selected invoice
         /// </summary>
         /// <returns></returns>
-        public double calcTotalCost()
+        public double calculateTotalCost()
         {
-            return 0;
+            double total = 0;
+
+            try
+            {
+                //loop over items and total
+                foreach (Item item in invoiceItems)
+                {
+                    total += item.Cost;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
+            return total;
         }
-    }
-}
+
+        public void deleteInvoice(Invoice invoice)
+        {
+            try
+            {
+                //remove from the list
+                invoices.Remove(invoice);
+
+                //delete from database
+                db.deleteInvoice(invoice);
+
+                //clear items
+                invoiceItems.Clear();
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
+        }
+    }//class
+}//namespace

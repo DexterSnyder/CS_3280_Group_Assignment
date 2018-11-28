@@ -69,6 +69,9 @@ namespace CS_3280_Group_Assignment.Main
 
                 loadInvoices();
                 loadItemComboBox();
+
+                InvoiceDatePicker.IsEnabled = true;
+                loadItemListBox(workingInvoice);
             }
             catch (Exception ex)
             {
@@ -167,12 +170,13 @@ namespace CS_3280_Group_Assignment.Main
             try
             {
                 isEditing = true;
-                //get selection
+
                 //unlock text boxes and buttons
                 AddItemButton.IsEnabled = true;
                 RemoveItemButton.IsEnabled = true;
                 SaveButton.IsEnabled = true;
-                InvoiceDateTextBox.IsReadOnly = false;
+                InvoiceDateTextBox.Visibility = Visibility.Hidden;
+                InvoiceDatePicker.Visibility = Visibility.Visible;
                 SelectItemBox.IsEnabled = true;
 
                 //Lock controls
@@ -201,7 +205,11 @@ namespace CS_3280_Group_Assignment.Main
             try
             {
                 //get selection
+                Invoice temp = (Invoice)InvoiceListBox.SelectedItem;
+
                 //delete selection
+                logic.deleteInvoice(temp);
+
                 loadInvoices();
             }
             catch (Exception ex)
@@ -224,7 +232,8 @@ namespace CS_3280_Group_Assignment.Main
                 AddItemButton.IsEnabled = true;
                 RemoveItemButton.IsEnabled = true;
                 SaveButton.IsEnabled = true;
-                InvoiceDateTextBox.IsReadOnly = false;
+                InvoiceDateTextBox.Visibility = Visibility.Hidden;
+                InvoiceDatePicker.Visibility = Visibility.Visible;
                 SelectItemBox.IsEnabled = true;
 
                 //Lock controls
@@ -264,16 +273,32 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
+                //get the date
+                DateTime? date = InvoiceDatePicker.SelectedDate;
+
                 //if the user is adding a new invoice
                 if (isAdding)
                 {
+                    //User must enter a date
+                    if (date == null)
+                    {
+                        return;
+                    }
                     //save to the database
+                    workingInvoice.InvoiceDate = date.ToString();
+
                     logic.saveNewInvoice(workingInvoice);
                     isAdding = false;
                     loadInvoices();
                 }
                 if (isEditing)
                 {
+                    //Only update the date if it has been changed
+                    if (date != null)
+                    {
+                        workingInvoice.InvoiceDate = date.ToString();
+                    }
+
                     //update the database
                     logic.updateInvoice(workingInvoice);
                     isEditing = false;
@@ -284,7 +309,8 @@ namespace CS_3280_Group_Assignment.Main
                 AddItemButton.IsEnabled = false;
                 RemoveItemButton.IsEnabled = false;
                 SaveButton.IsEnabled = false;
-                InvoiceDateTextBox.IsReadOnly = true;
+                InvoiceDateTextBox.Visibility = Visibility.Visible;
+                InvoiceDatePicker.Visibility = Visibility.Hidden;
                 SelectItemBox.IsEnabled = false;
 
                 //unlock UI controls
@@ -292,6 +318,9 @@ namespace CS_3280_Group_Assignment.Main
                 DeleteInvoiceButton.IsEnabled = true;
                 EditInvoiceButton.IsEnabled = true;
                 InvoiceListBox.IsEnabled = true;
+
+                logic.getInvoices();
+                loadInvoices();
             }
             catch (Exception ex)
             {
@@ -362,6 +391,12 @@ namespace CS_3280_Group_Assignment.Main
         {
             try
             {
+                //for when we reload the invoices
+                if (e.AddedItems.Count == 0)
+                {
+                    return;
+                }
+
                 Invoice temp = (Invoice)InvoiceListBox.SelectedItem;
                 InvoiceNumberTextBox.Text = temp.InvoiceNumber.ToString();
                 InvoiceDateTextBox.Text = temp.InvoiceDate;
@@ -449,9 +484,10 @@ namespace CS_3280_Group_Assignment.Main
                 //remove it
                 logic.invoiceItems.Remove(temp);
 
-                workingInvoice.TotalCost = logic.calcTotalCost();
+
+                workingInvoice.TotalCost = logic.calculateTotalCost();
                 TotalCostTextBox.Text = workingInvoice.TotalCost.ToString();
-                
+
             }
             catch (Exception ex)
             {
@@ -475,7 +511,7 @@ namespace CS_3280_Group_Assignment.Main
                 //remove it
                 logic.invoiceItems.Add(temp);
 
-                workingInvoice.TotalCost = logic.calcTotalCost();
+                workingInvoice.TotalCost = logic.calculateTotalCost();
                 TotalCostTextBox.Text = workingInvoice.TotalCost.ToString();
 
             }
