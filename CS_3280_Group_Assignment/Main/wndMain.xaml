@@ -63,28 +63,33 @@
 
 
     <Grid Margin="0,0,0.333,0.333">
-        <Menu HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="793">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Menu HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="793" Grid.ColumnSpan="2" Margin="0,0,-178,0">
             <Button x:Name="UpdateButton" Content="Update" BorderBrush="{x:Null}" Click="UpdateButton_Click"/>
             <Button x:Name="Search" Content="Search" BorderBrush="{x:Null}" Click="Search_Click"/>
         </Menu>
-        <ListBox x:Name="InvoiceListBox" HorizontalAlignment="Left" Height="242" Margin="35,71,0,0" VerticalAlignment="Top" Width="228" ItemTemplate="{StaticResource InvoiceDataTemplate}"  BorderBrush="#FF03060D" SelectionChanged="InvoiceListBox_SelectionChanged"/>
-        <Label x:Name="InvoiceHeader" Content="Existing Invoices" HorizontalAlignment="Left" Margin="77,32,0,0" VerticalAlignment="Top" FontSize="18"/>
-        <Button x:Name="EditInvoiceButton" Content="Edit" HorizontalAlignment="Left" Margin="195,424,0,0" VerticalAlignment="Top" Width="75" Click="EditInvoiceButton_Click"/>
-        <Button x:Name="DeleteInvoiceButton" Content="Delete" HorizontalAlignment="Left" Margin="115,424,0,0" VerticalAlignment="Top" Width="75" Click="DeleteInvoiceButton_Click"/>
-        <Button x:Name="NewInvoiceButton" Content="New" HorizontalAlignment="Left" Margin="35,424,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.454,0.409" Click="NewInvoiceButton_Click"/>
-        <TextBox x:Name="InvoiceNumberTextBox" HorizontalAlignment="Left" Height="23" Margin="142,333,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" IsReadOnly="True"/>
-        <TextBox x:Name="InvoiceDateTextBox" HorizontalAlignment="Left" Height="23" Margin="142,376,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" IsReadOnly="True"/>
-        <TextBox x:Name="TotalCostTextBox" HorizontalAlignment="Left" Height="23" Margin="393,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" IsReadOnly="True"/>
-        <Label x:Name="InvoiceNumberLabel" Content="Invoice Number" HorizontalAlignment="Left" Margin="35,330,0,0" VerticalAlignment="Top" Width="102"/>
-        <Label x:Name="InvoiceDateLabel" Content="Invoice Date" HorizontalAlignment="Left" Margin="56,372,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.626,0.488" Width="81"/>
-        <Label x:Name="TotalCostLabel" Content="Total Cost" HorizontalAlignment="Left" Margin="321,330,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.3,-0.33" Width="67"/>
-        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="481,424,0,0" VerticalAlignment="Top" Width="75" Click="SaveButton_Click" IsEnabled="False"/>
-        <ListBox x:Name="ItemListBox" HorizontalAlignment="Left" Height="242" Margin="281,71,0,0" VerticalAlignment="Top" Width="279" BorderBrush="#FF040509"  ItemTemplate="{StaticResource ItemDataTemplate}" />
-        <Label Content="Items" HorizontalAlignment="Left" Margin="382,32,0,0" VerticalAlignment="Top" FontSize="18"/>
-        <ComboBox x:Name="SelectItemBox" HorizontalAlignment="Left" Margin="395,377,0,0" VerticalAlignment="Top" Width="165" IsEnabled="False"/>
-        <Label Content="Select Item" HorizontalAlignment="Left" Margin="321,373,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="RemoveItemButton" Content="Remove Item" HorizontalAlignment="Left" Margin="401,424,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.062,0.497" Click="RemoveItemButton_Click" IsEnabled="False"/>
-        <Button x:Name="AddItemButton" Content="Add Item" HorizontalAlignment="Left" Margin="321,424,0,0" VerticalAlignment="Top" Width="75" Click="AddItemButton_Click" IsEnabled="False"/>
+        <ListBox x:Name="InvoiceListBox" HorizontalAlignment="Left" Height="242" Margin="35,71,0,0" VerticalAlignment="Top" Width="267" ItemTemplate="{StaticResource InvoiceDataTemplate}"  BorderBrush="#FF03060D" SelectionChanged="InvoiceListBox_SelectionChanged" Grid.ColumnSpan="2" />
+        <Label x:Name="InvoiceHeader" Content="Existing Invoices" HorizontalAlignment="Left" Margin="77,32,0,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="2"/>
+        <Button x:Name="EditInvoiceButton" Content="Edit" HorizontalAlignment="Left" Margin="195,424,0,0" VerticalAlignment="Top" Width="75" Click="EditInvoiceButton_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="DeleteInvoiceButton" Content="Delete" HorizontalAlignment="Left" Margin="115,424,0,0" VerticalAlignment="Top" Width="75" Click="DeleteInvoiceButton_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="NewInvoiceButton" Content="New" HorizontalAlignment="Left" Margin="35,424,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.454,0.409" Click="NewInvoiceButton_Click" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="InvoiceNumberTextBox" HorizontalAlignment="Left" Height="23" Margin="142,333,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" IsReadOnly="True" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="InvoiceDateTextBox" HorizontalAlignment="Left" Height="23" Margin="142,376,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" IsReadOnly="True" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="TotalCostTextBox" HorizontalAlignment="Left" Height="23" Margin="393,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" IsReadOnly="True" Grid.ColumnSpan="2"/>
+        <Label x:Name="InvoiceNumberLabel" Content="Invoice Number" HorizontalAlignment="Left" Margin="35,330,0,0" VerticalAlignment="Top" Width="102" Grid.ColumnSpan="2"/>
+        <Label x:Name="InvoiceDateLabel" Content="Invoice Date" HorizontalAlignment="Left" Margin="56,372,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.626,0.488" Width="81" Grid.ColumnSpan="2"/>
+        <Label x:Name="TotalCostLabel" Content="Total Cost" HorizontalAlignment="Left" Margin="321,330,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.3,-0.33" Width="67" Grid.ColumnSpan="2"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="481,424,0,0" VerticalAlignment="Top" Width="75" Click="SaveButton_Click" IsEnabled="False" Grid.ColumnSpan="2"/>
+        <ListBox x:Name="ItemListBox" HorizontalAlignment="Left" Height="242" Margin="321,71,0,0" VerticalAlignment="Top" Width="239" BorderBrush="#FF040509"  ItemTemplate="{StaticResource ItemDataTemplate}" Grid.ColumnSpan="2" />
+        <Label Content="Items" HorizontalAlignment="Left" Margin="413,32,0,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="2" RenderTransformOrigin="1.131,0.853"/>
+        <ComboBox x:Name="SelectItemBox" HorizontalAlignment="Left" Margin="395,377,0,0" VerticalAlignment="Top" Width="165" IsEnabled="False" Grid.ColumnSpan="2"/>
+        <Label Content="Select Item" HorizontalAlignment="Left" Margin="321,373,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Button x:Name="RemoveItemButton" Content="Remove Item" HorizontalAlignment="Left" Margin="401,424,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.062,0.497" Click="RemoveItemButton_Click" IsEnabled="False" Grid.ColumnSpan="2"/>
+        <Button x:Name="AddItemButton" Content="Add Item" HorizontalAlignment="Left" Margin="321,424,0,0" VerticalAlignment="Top" Width="75" Click="AddItemButton_Click" IsEnabled="False" Grid.ColumnSpan="2"/>
+        <DatePicker x:Name="InvoiceDatePicker" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="142,374,0,0" VerticalAlignment="Top" IsEnabled="False" Width="160" Visibility="Hidden"/>
 
     </Grid>
 </Window>

@@ -190,35 +190,37 @@ namespace CS_3280_Group_Assignment.Main
             return allItems;
         }
 
-        //---------------------------------------------------------------------------------------------------------------------------------------------
-
         /// <summary>
         /// Add a new invoice with line items to the database
         /// </summary>
         /// <param name="invoice">The invoice to add</param>
         /// <param name="items">The items to add</param>
         /// <returns>New Invoice ID</returns>
-        public int addNewInvoice (Invoice invoice, ObservableCollection<Item> items)
+        public int addNewInvoice(Invoice invoice, ObservableCollection<Item> items)
         {
             int newInvoiceNumber = 0;
             try
             {
                 int iRef = 0;
-                DataSet ds;
                 string query = "";
 
                 //insert the invoice
-                query = "INSERT INTO PASSENGER() VALUES('')";
+                query = "INSERT INTO Invoices(InvoiceDate, TotalCost) VALUES(#" + invoice.InvoiceDate + "#, " + invoice.TotalCost + " )";
 
                 iRef = db.ExecuteNonQuery(query);
 
                 //Get the ID back
+                query = "SELECT MAX(InvoiceNum) FROM Invoices";
 
+                string temp = db.ExecuteScalarSQL(query);
+                invoice.InvoiceNumber = Int32.Parse(temp);
 
-                //insert the line Items
-                query = "INSERT INTO PASSENGER() VALUES('')";
-
-                iRef = db.ExecuteNonQuery(query);
+                for (int i =0; i < items.Count(); i++)
+                {
+                    //insert the line Items
+                    query = "INSERT INTO LineItems (InvoiceNum, LineItemNum, ItemCode) VALUES(" + invoice.InvoiceNumber + "," + (i+1) + ",'" + items.ElementAt(i).ItemCode + "')";
+                    iRef = db.ExecuteNonQuery(query);
+                }
 
             }
             catch (Exception ex)
@@ -239,13 +241,47 @@ namespace CS_3280_Group_Assignment.Main
             try
             {
                 int iRef = 0;
-                DataSet ds;
                 string query = "";
 
                 //Delete the existing line item records that match the invoice ID
+                query = "DELETE FROM LineItems WHERE InvoiceNum = " + invoice.InvoiceNumber + ";";
+
+                iRef = db.ExecuteNonQuery(query);
 
                 //Insert new records from the items list
+                for (int i = 0; i < items.Count(); i++)
+                {
+                    //insert the line Items
+                    query = "INSERT INTO LineItems (InvoiceNum, LineItemNum, ItemCode) VALUES(" + invoice.InvoiceNumber + "," + (i + 1) + ",'" + items.ElementAt(i).ItemCode + "')";
+                }
 
+                iRef = db.ExecuteNonQuery(query);
+
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Deletes and invoice and it's line numbers from the database
+        /// </summary>
+        /// <param name="invoice">Invoice to delete</param>
+        public void deleteInvoice (Invoice invoice)
+        {
+            try
+            {
+                int iRef = 0;
+                string query = "";
+
+                //Delete the invoice
+                query = "DELETE FROM LineItems WHERE InvoiceNum = " + invoice.InvoiceNumber + ";";
+                iRef = db.ExecuteNonQuery(query);
+
+                //Delete the line items
+                query = "DELETE FROM Invoices WHERE InvoiceNum = " + invoice.InvoiceNumber + ";";
                 iRef = db.ExecuteNonQuery(query);
             }
             catch (Exception ex)
@@ -254,5 +290,6 @@ namespace CS_3280_Group_Assignment.Main
                                              "HandleError Exception: " + ex.Message);
             }
         }
+
     }//class
 }//namespace
