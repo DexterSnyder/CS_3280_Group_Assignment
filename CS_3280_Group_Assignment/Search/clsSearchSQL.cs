@@ -27,7 +27,9 @@ namespace CS_3280_Group_Assignment.Search
         /// <summary>
         /// an Invoice object to help get some methods
         /// </summary>
-        private Invoice inv; 
+        private Invoice inv;
+
+    
 
         /// <summary>
         /// Array Lists to help store our needed data for the Search Window Combo-boxes
@@ -36,6 +38,10 @@ namespace CS_3280_Group_Assignment.Search
         private ArrayList invoiceIDs;
         private ArrayList invoiceCosts;
 
+        ///<summary>
+        ///List to add invoices to the data grid on the search screen
+        /// </summary>
+        public List<Invoice> InvoiceList = new List<Invoice>();
         #endregion
 
         /// <summary>
@@ -60,6 +66,63 @@ namespace CS_3280_Group_Assignment.Search
         }
 
         #region Methods
+
+        /// <summary>
+        /// get our invoice IDS for our Search Window combo-box
+        /// </summary>
+        /// <returns>items</returns>
+        public List<Invoice> getInvoices()
+        {
+            try
+            {
+                DataSet ds;
+                int iRef = 0;
+
+                //SQL Query to extract the Invoice ID from the INvoices table
+                string query = "SELECT InvoiceNum, InvoiceDate, TotalCost FROM Invoices";
+
+                ds = db.ExecuteSQLStatement(query, ref iRef);
+
+                //iterate through all the rows
+                for (int i = 0; i < iRef; i++)
+                {
+                    //get the invoice ID as a string
+                    string sinvoiceID = ds.Tables[0].Rows[i]["InvoiceNum"].ToString();
+
+                    //get the invoice date as a string
+                    string sinvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString();
+
+                    //get the invoice cost as a string
+                    string sinvoiceCost = (ds.Tables[0].Rows[i]["TotalCost"]).ToString();
+
+                    //conver the invoice ID to an int
+                    int invoiceID = Convert.ToInt32(sinvoiceID);
+
+                    //convert the total cost to a double
+                    double totalInvoiceCost = Convert.ToDouble(sinvoiceCost);
+
+                    //create an Invoice object
+                    //Invoice inv = new Invoice(invoiceID, invoiceDate, totalCost);
+
+                    //add to our invoiceID list
+                    InvoiceList.Add( new Invoice { invoiceNumber = invoiceID, invoiceDate = sinvoiceDate, totalCost = totalInvoiceCost });
+                }
+
+                //return our list
+                return InvoiceList;
+
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+
+            }
+
+        }
+
+
+
 
         /// <summary>
         /// get our invoice IDS for our Search Window combo-box

@@ -137,9 +137,9 @@ namespace CS_3280_Group_Assignment.Search
                 loadInvoiceCostsInComboBox();
 
                 ///<summary>
-                ///this will be used to bind to our list of invoices
+                ///this will be used to bind to our list of invoices and display it in our search window DataGrid
                 /// </summary>
-                DisplaySearchedInvoice.ItemsSource = clsSearchLogicInst.GetSearchedInvoices();
+                DisplaySearchedInvoice.ItemsSource = clsSearchLogicInst.GetInvoicesFromDataBase();
 
             }
             catch (Exception ex)
@@ -363,6 +363,11 @@ namespace CS_3280_Group_Assignment.Search
             }
         }
 
+
+        private void LoadInvoicesIntoDataGrid()
+        {
+
+        }
         #endregion
         #endregion
 

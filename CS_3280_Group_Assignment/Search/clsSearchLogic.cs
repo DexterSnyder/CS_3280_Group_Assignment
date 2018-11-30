@@ -27,6 +27,20 @@ namespace CS_3280_Group_Assignment.Search
 
         #endregion
 
+
+        #region Lists
+
+        List<Invoice> lstInvoices = new List<Invoice>();
+
+        #endregion
+
+
+        #region Class Objects
+
+        private clsSearchSQL clsSQL; 
+
+        #endregion 
+
         #region Methods
 
 
@@ -52,6 +66,8 @@ namespace CS_3280_Group_Assignment.Search
         /// </summary>
         public clsSearchLogic()
         {
+            //initialize our clsSearchSQL class object
+            clsSQL = new clsSearchSQL(); 
         }
 
 
@@ -59,13 +75,12 @@ namespace CS_3280_Group_Assignment.Search
         /// Function to initially populate our DataGrid when we first open the Search window
         /// Basic constructor
         /// </summary>
-        public List<clsSearchLogic> GetSearchedInvoices(){
+        public List<Invoice> GetInvoicesFromDataBase(){
 
-            List<clsSearchLogic> lstInvoices = new List<clsSearchLogic>();
+            //populate our list with the data we got back from the database
+            lstInvoices = clsSQL.getInvoices(); 
 
-            //grab the data from our database initially to display in the DataGrid
-            //lstInvoices.Add(new clsSearchLogic { invoiceID, invoiceDate, invoiceCharge}); 
-
+            //return the list
             return lstInvoices;   
          }
 

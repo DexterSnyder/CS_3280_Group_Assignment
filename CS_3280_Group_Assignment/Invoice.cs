@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace CS_3280_Group_Assignment
 {
-    class Invoice
+   public class Invoice
     {
         /// <summary>
         /// Invoice number
         /// </summary>
-        protected int invoiceNumber;
+        public int invoiceNumber;
 
         /// <summary>
         /// invoiceDate
         /// </summary>
-        protected string invoiceDate;
+        public string invoiceDate;
 
         /// <summary>
         /// total cost
         /// </summary>
 
-        protected double totalCost;
+        public double totalCost;
 
         /// <summary>
         /// a public string for the format of the string, tried to write an overload ToString() but it didn't work so well 
