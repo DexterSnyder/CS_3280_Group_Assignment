@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -31,10 +32,10 @@ namespace CS_3280_Group_Assignment.Main
             }
         }//constructor
 
-        public ArrayList getInvoices()
+        public ObservableCollection<Invoice> getInvoices()
 
         {
-            ArrayList invoices = new ArrayList();
+            ObservableCollection<Invoice> invoices = new ObservableCollection<Invoice>();
 
             try
             { 
@@ -70,14 +71,22 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="toAdd">invoice to add</param>
         public void createInvoice (Invoice toAdd)
         {
-            //set up query
-            int iRef = 0;
-            string date = toAdd.InvoiceDate;
-            string cost = toAdd.TotalCost.ToString();
-            string query = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#" + date + "#, " + cost + ");";
+            try
+            {
+                //set up query
+                int iRef = 0;
+                string date = toAdd.InvoiceDate;
+                string cost = toAdd.TotalCost.ToString();
+                string query = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#" + date + "#, " + cost + ");";
 
-            //execute
-            iRef = db.ExecuteNonQuery(query);
+                //execute
+                iRef = db.ExecuteNonQuery(query);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -86,19 +95,33 @@ namespace CS_3280_Group_Assignment.Main
         /// <param name="toUpdate">Invoice to update</param>
         public void updateInvoice(Invoice toUpdate)
         {
-            //set up query
-            int iRef = 0;
-            string date = toUpdate.InvoiceDate;
-            string cost = toUpdate.TotalCost.ToString();
-            string number = toUpdate.InvoiceNumber.ToString();
+            try
+            {
 
-            string query = "UPDATE Invoices SET InvoiceDate = #" + date + "#, TotalCost = " + cost + " " +
-                "WHERE InvoiceNum = " + number + ";";
+                //set up query
+                int iRef = 0;
+                string date = toUpdate.InvoiceDate;
+                string cost = toUpdate.TotalCost.ToString();
+                string number = toUpdate.InvoiceNumber.ToString();
+
+                string query = "UPDATE Invoices SET InvoiceDate = #" + date + "#, TotalCost = " + cost + " " +
+                    "WHERE InvoiceNum = " + number + ";";
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
 
-        public ArrayList getInvoiceItems(Invoice invoice)
+        /// <summary>
+        /// Gets all items related to specfic invoice
+        /// </summary>
+        /// <param name="invoice">The invoice to get items for</param>
+        /// <returns>List of items</returns>
+        public ObservableCollection<Item> getInvoiceItems(Invoice invoice)
         {
-            ArrayList items = new ArrayList();
+            ObservableCollection<Item> items = new ObservableCollection<Item>();
 
             try
             {
@@ -132,30 +155,141 @@ namespace CS_3280_Group_Assignment.Main
             return items;
         }
 
-        public ArrayList getAllItems ()
+        /// <summary>
+        /// Get all items in the database
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<Item> getAllItems ()
         {
-            ArrayList allItems = new ArrayList();
-
-            
-            //set up query
-            DataSet ds;
-            int iRef = 0;
-            string query = "SELECT  ItemCode, ItemDesc, Cost FROM ItemDesc;";
-
-            //execute
-            ds = db.ExecuteSQLStatement(query, ref iRef);
-
-            //assign objects
-            for (int i = 0; i < iRef; i++)
+            ObservableCollection<Item> allItems = new ObservableCollection<Item>();
+            try
             {
-                string code = ds.Tables[0].Rows[i]["ItemCode"].ToString();
-                string description = ds.Tables[0].Rows[i]["ItemDesc"].ToString();
-                double cost = Int32.Parse(ds.Tables[0].Rows[i]["Cost"].ToString());
-                Item item = new Item(code, description, cost);
-                allItems.Add(item);
-            }
+                //set up query
+                DataSet ds;
+                int iRef = 0;
+                string query = "SELECT  ItemCode, ItemDesc, Cost FROM ItemDesc;";
 
+                //execute
+                ds = db.ExecuteSQLStatement(query, ref iRef);
+
+                //assign objects
+                for (int i = 0; i < iRef; i++)
+                {
+                    string code = ds.Tables[0].Rows[i]["ItemCode"].ToString();
+                    string description = ds.Tables[0].Rows[i]["ItemDesc"].ToString();
+                    double cost = Int32.Parse(ds.Tables[0].Rows[i]["Cost"].ToString());
+                    Item item = new Item(code, description, cost);
+                    allItems.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
             return allItems;
         }
+
+        /// <summary>
+        /// Add a new invoice with line items to the database
+        /// </summary>
+        /// <param name="invoice">The invoice to add</param>
+        /// <param name="items">The items to add</param>
+        /// <returns>New Invoice ID</returns>
+        public int addNewInvoice(Invoice invoice, ObservableCollection<Item> items)
+        {
+            int newInvoiceNumber = 0;
+            try
+            {
+                int iRef = 0;
+                string query = "";
+
+                //insert the invoice
+                query = "INSERT INTO Invoices(InvoiceDate, TotalCost) VALUES(#" + invoice.InvoiceDate + "#, " + invoice.TotalCost + " )";
+
+                iRef = db.ExecuteNonQuery(query);
+
+                //Get the ID back
+                query = "SELECT MAX(InvoiceNum) FROM Invoices";
+
+                string temp = db.ExecuteScalarSQL(query);
+                invoice.InvoiceNumber = Int32.Parse(temp);
+
+                for (int i =0; i < items.Count(); i++)
+                {
+                    //insert the line Items
+                    query = "INSERT INTO LineItems (InvoiceNum, LineItemNum, ItemCode) VALUES(" + invoice.InvoiceNumber + "," + (i+1) + ",'" + items.ElementAt(i).ItemCode + "')";
+                    iRef = db.ExecuteNonQuery(query);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
+            return newInvoiceNumber;
+        }
+
+        /// <summary>
+        /// Updates the line items of a specific invoice
+        /// </summary>
+        /// <param name="invoice">Invoice to update</param>
+        /// <param name="items">New item list</param>
+        public void updateInvoice(Invoice invoice, ObservableCollection<Item> items)
+        {
+            try
+            {
+                int iRef = 0;
+                string query = "";
+
+                //Delete the existing line item records that match the invoice ID
+                query = "DELETE FROM LineItems WHERE InvoiceNum = " + invoice.InvoiceNumber + ";";
+
+                iRef = db.ExecuteNonQuery(query);
+
+                //Insert new records from the items list
+                for (int i = 0; i < items.Count(); i++)
+                {
+                    //insert the line Items
+                    query = "INSERT INTO LineItems (InvoiceNum, LineItemNum, ItemCode) VALUES(" + invoice.InvoiceNumber + "," + (i + 1) + ",'" + items.ElementAt(i).ItemCode + "')";
+                }
+
+                iRef = db.ExecuteNonQuery(query);
+
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Deletes and invoice and it's line numbers from the database
+        /// </summary>
+        /// <param name="invoice">Invoice to delete</param>
+        public void deleteInvoice (Invoice invoice)
+        {
+            try
+            {
+                int iRef = 0;
+                string query = "";
+
+                //Delete the invoice
+                query = "DELETE FROM LineItems WHERE InvoiceNum = " + invoice.InvoiceNumber + ";";
+                iRef = db.ExecuteNonQuery(query);
+
+                //Delete the line items
+                query = "DELETE FROM Invoices WHERE InvoiceNum = " + invoice.InvoiceNumber + ";";
+                iRef = db.ExecuteNonQuery(query);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
+        }
+
     }//class
 }//namespace
