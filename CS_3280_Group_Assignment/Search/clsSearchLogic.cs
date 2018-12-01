@@ -27,6 +27,20 @@ namespace CS_3280_Group_Assignment.Search
 
         #endregion
 
+
+        #region Lists
+
+        List<Invoice> lstInvoices = new List<Invoice>();
+
+        #endregion
+
+
+        #region Class Objects
+
+        private clsSearchSQL clsSQL;
+
+        #endregion
+
         #region Methods
 
 
@@ -44,7 +58,7 @@ namespace CS_3280_Group_Assignment.Search
         {
             this.invoiceID = invoiceI;
             this.invoiceDate = invoiceD;
-            this.invoiceCharge = invoiceC; 
+            this.invoiceCharge = invoiceC;
         }
 
         /// <summary>
@@ -52,6 +66,8 @@ namespace CS_3280_Group_Assignment.Search
         /// </summary>
         public clsSearchLogic()
         {
+            //initialize our clsSearchSQL class object
+            clsSQL = new clsSearchSQL();
         }
 
 
@@ -59,15 +75,15 @@ namespace CS_3280_Group_Assignment.Search
         /// Function to initially populate our DataGrid when we first open the Search window
         /// Basic constructor
         /// </summary>
-        public List<clsSearchLogic> GetSearchedInvoices(){
+        public List<Invoice> GetInvoicesFromDataBase()
+        {
 
-            List<clsSearchLogic> lstInvoices = new List<clsSearchLogic>();
+            //populate our list with the data we got back from the database
+            lstInvoices = clsSQL.getInvoices();
 
-            //grab the data from our database initially to display in the DataGrid
-            //lstInvoices.Add(new clsSearchLogic { invoiceID, invoiceDate, invoiceCharge}); 
-
-            return lstInvoices;   
-         }
+            //return the list
+            return lstInvoices;
+        }
 
         /// <summary>
         /// Function to set the data retrieved by the value (row/invoice) selected in the Search window
@@ -107,10 +123,10 @@ namespace CS_3280_Group_Assignment.Search
             set
             {
                 //make sure what we received was of type "int"
-                if(value.GetType() == typeof(int))
+                if (value.GetType() == typeof(int))
                 {
                     //set invoiceID to the retrieved value
-                    invoiceID = value; 
+                    invoiceID = value;
                 }
                 else
                 {

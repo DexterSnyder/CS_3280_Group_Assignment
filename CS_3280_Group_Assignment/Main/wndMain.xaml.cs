@@ -67,6 +67,11 @@ namespace CS_3280_Group_Assignment.Main
                 workingInvoice = new Invoice();
                 logic = new clsMainLogic();
 
+                //disable buttons
+                AddItemButton.Visibility = Visibility.Hidden;
+                RemoveItemButton.Visibility = Visibility.Hidden;
+                SaveButton.Visibility = Visibility.Hidden;
+
                 loadInvoices();
                 loadItemComboBox();
 
@@ -172,17 +177,17 @@ namespace CS_3280_Group_Assignment.Main
                 isEditing = true;
 
                 //unlock text boxes and buttons
-                AddItemButton.IsEnabled = true;
-                RemoveItemButton.IsEnabled = true;
-                SaveButton.IsEnabled = true;
+                AddItemButton.Visibility = Visibility.Visible;
+                RemoveItemButton.Visibility = Visibility.Visible;
+                SaveButton.Visibility = Visibility.Visible;
                 InvoiceDateTextBox.Visibility = Visibility.Hidden;
                 InvoiceDatePicker.Visibility = Visibility.Visible;
                 SelectItemBox.IsEnabled = true;
 
                 //Lock controls
-                NewInvoiceButton.IsEnabled = false;
-                DeleteInvoiceButton.IsEnabled = false;
-                EditInvoiceButton.IsEnabled = false;
+                NewInvoiceButton.Visibility = Visibility.Hidden;
+                DeleteInvoiceButton.Visibility = Visibility.Hidden;
+                EditInvoiceButton.Visibility = Visibility.Hidden;
                 InvoiceListBox.IsEnabled = false;
 
                 //set working invoice equal to currently selected
@@ -229,17 +234,17 @@ namespace CS_3280_Group_Assignment.Main
             try
             {
                 //unlock UI controls
-                AddItemButton.IsEnabled = true;
-                RemoveItemButton.IsEnabled = true;
-                SaveButton.IsEnabled = true;
+                AddItemButton.Visibility = Visibility.Visible;
+                RemoveItemButton.Visibility = Visibility.Visible;
+                SaveButton.Visibility = Visibility.Visible;
                 InvoiceDateTextBox.Visibility = Visibility.Hidden;
                 InvoiceDatePicker.Visibility = Visibility.Visible;
                 SelectItemBox.IsEnabled = true;
 
                 //Lock controls
-                NewInvoiceButton.IsEnabled = false;
-                DeleteInvoiceButton.IsEnabled = false;
-                EditInvoiceButton.IsEnabled = false;
+                NewInvoiceButton.Visibility = Visibility.Hidden;
+                DeleteInvoiceButton.Visibility = Visibility.Hidden;
+                EditInvoiceButton.Visibility = Visibility.Hidden;
                 InvoiceListBox.IsEnabled = false;
 
                 //set up text boxes
@@ -282,6 +287,7 @@ namespace CS_3280_Group_Assignment.Main
                     //User must enter a date
                     if (date == null)
                     {
+                        MessageBox.Show("You must enter a valid date");
                         return;
                     }
                     //save to the database
@@ -306,17 +312,17 @@ namespace CS_3280_Group_Assignment.Main
                 }
 
                 //Lock UI controls
-                AddItemButton.IsEnabled = false;
-                RemoveItemButton.IsEnabled = false;
-                SaveButton.IsEnabled = false;
+                AddItemButton.Visibility = Visibility.Hidden;
+                RemoveItemButton.Visibility = Visibility.Hidden;
+                SaveButton.Visibility = Visibility.Hidden;
                 InvoiceDateTextBox.Visibility = Visibility.Visible;
                 InvoiceDatePicker.Visibility = Visibility.Hidden;
                 SelectItemBox.IsEnabled = false;
 
                 //unlock UI controls
-                NewInvoiceButton.IsEnabled = true;
-                DeleteInvoiceButton.IsEnabled = true;
-                EditInvoiceButton.IsEnabled = true;
+                NewInvoiceButton.Visibility = Visibility.Visible;
+                DeleteInvoiceButton.Visibility = Visibility.Visible;
+                EditInvoiceButton.Visibility = Visibility.Visible;
                 InvoiceListBox.IsEnabled = true;
 
                 logic.getInvoices();
@@ -508,9 +514,16 @@ namespace CS_3280_Group_Assignment.Main
                 //get the selected item
                 Item temp = (Item)SelectItemBox.SelectedItem;
 
-                //remove it
+                if (temp == null)
+                {
+                    MessageBox.Show("You must select an item");
+                    return;
+                }
+
+                //add it
                 logic.invoiceItems.Add(temp);
 
+                //calcluate the cost
                 workingInvoice.TotalCost = logic.calculateTotalCost();
                 TotalCostTextBox.Text = workingInvoice.TotalCost.ToString();
 
