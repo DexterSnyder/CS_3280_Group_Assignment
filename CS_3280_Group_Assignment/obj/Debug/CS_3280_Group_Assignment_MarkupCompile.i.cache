@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\
 CS_3280_Group_Assignment
 none
 false
 DEBUG;TRACE
-C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\App.xaml
-3-1250846507
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\App.xaml
+1195131981
 
-181851899539
+211299052046
 131569487696
-Items\wndItems.xaml;MainWindow.xaml;Main\wndMain.xaml;
+Themes\BureauBlack.xaml;Themes\BureauBlue.xaml;Themes\ExpressionDark.xaml;Themes\ExpressionLight.xaml;Items\wndItems.xaml;MainWindow.xaml;Main\wndMain.xaml;Search\wndSearch.xaml;Themes\ShinyBlue.xaml;Themes\ShinyRed.xaml;Themes\WhistlerBlue.xaml;
 
-True
+False
 
