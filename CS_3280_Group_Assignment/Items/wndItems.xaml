@@ -12,13 +12,14 @@
         <Button x:Name="EditItemButton" Content="Edit Item" HorizontalAlignment="Left" Margin="490,212,0,0" VerticalAlignment="Top" Width="75" Click="EditItemButton_Click"/>
         <Button x:Name="DeleteItemButton" Content="Delete Item" HorizontalAlignment="Left" Margin="570,212,0,0" VerticalAlignment="Top" Width="75" Click="DeleteItemButton_Click"/>
         <Button x:Name="AddItemButton" Content="Add New Item" HorizontalAlignment="Left" Margin="389,212,0,0" VerticalAlignment="Top" Width="96" RenderTransformOrigin="0.454,0.409" Click="AddNewItem_Click"/>
-        <TextBox x:Name="ItemCodeTextBox" HorizontalAlignment="Left" Height="23" Margin="467,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" IsReadOnly="True"/>
-        <TextBox x:Name="ItemCostTextBox" HorizontalAlignment="Left" Height="23" Margin="467,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66" IsReadOnly="True"/>
-        <TextBox x:Name="ItemDescriptionTextBox" HorizontalAlignment="Left" Height="23" Margin="467,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" IsReadOnly="True"/>
+        <TextBox x:Name="ItemCodeTextBox" HorizontalAlignment="Left" Height="23" Margin="467,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" />
+        <TextBox x:Name="ItemCostTextBox" HorizontalAlignment="Left" Height="23" Margin="467,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66" />
+        <TextBox x:Name="ItemDescriptionTextBox" HorizontalAlignment="Left" Height="23" Margin="467,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" />
         <Label x:Name="ItemCodeLabel" Content="Item Code" HorizontalAlignment="Left" Margin="396,73,0,0" VerticalAlignment="Top" Width="67"/>
         <Label x:Name="ItemCostLabel" Content="Item Cost" HorizontalAlignment="Left" Margin="396,148,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.626,0.488" Width="66"/>
         <Label x:Name="ItemDescriptionLabel" Content="Description" HorizontalAlignment="Left" Margin="396,110,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.3,-0.33" Width="74"/>
-        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="490,260,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click"/>
+        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="447,260,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click"/>
         <ListBox x:Name="ItemDataGrid" HorizontalAlignment="Left" Height="296" Margin="24,34,0,0" VerticalAlignment="Top" Width="322"/>
+        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="538,260,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click"/>
     </Grid>
 </Window>
