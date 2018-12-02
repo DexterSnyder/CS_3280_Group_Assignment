@@ -35,6 +35,18 @@ C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assign
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Items\wndItems.baml
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Search\wndSearch.g.cs
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Search\wndSearch.baml
+<<<<<<< HEAD
 C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.csprojResolveAssemblyReference.cache
 C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Search\wndSearch.g.cs
 C:\Users\robertohuntingfreak\Documents\cs3280\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Search\wndSearch.baml
+=======
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.csprojAssemblyReference.cache
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\BureauBlack.baml
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\BureauBlue.baml
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\ExpressionDark.baml
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\ExpressionLight.baml
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\ShinyBlue.baml
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\ShinyRed.baml
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\WhistlerBlue.baml
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\App.baml
+>>>>>>> c41f2d05518370419d7ae7ea9cb024934f2f6087
