@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CS_3280_Group_Assignment.Search"
         mc:Ignorable="d"
-        Title="wndSearch" Height="400" Width="300">
+        Title="wndSearch" Height="400" Width="400">
     <Grid>
-        <DataGrid x:Name="DisplaySearchedInvoice" HorizontalAlignment="Left" Height="148" Margin="10,148,0,0" VerticalAlignment="Top" Width="272" SelectionMode="Extended" SelectionChanged="DisplaySearchedInvoice_SelectionChanged" />
+        <DataGrid x:Name="DisplaySearchedInvoice" HorizontalAlignment="Left" Height="148" Margin="41,148,0,0" VerticalAlignment="Top" Width="314" SelectionMode="Extended" SelectionChanged="DisplaySearchedInvoice_SelectionChanged" />
         <Label x:Name="InvoiceNumberLabel" Content="Select Invoice Number" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="22" Width="92" FontSize="8px"/>
         <Label x:Name="InvoiceDisplayLabel" Content="Invoice: " HorizontalAlignment="Left" Margin="93,122,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.507,1.942"/>
-        <ComboBox x:Name="InvoiceDateDropDown" HorizontalAlignment="Left" Margin="107,49,0,0" VerticalAlignment="Top" Width="175" SelectionChanged="InvoiceDateDropDown_SelectionChanged"/>
-        <ComboBox x:Name="InvoiceTotalChargeDropDown" HorizontalAlignment="Left" Margin="107,89,0,0" VerticalAlignment="Top" Width="175" SelectionChanged="InvoiceTotalChargeDropDown_SelectionChanged"/>
-        <ComboBox x:Name="InvoiceNumberDropDown" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="175" SelectionChanged="InvoiceNumberDropDown_SelectionChanged"/>
+        <ComboBox x:Name="InvoiceDateDropDown" HorizontalAlignment="Left" Margin="107,49,0,0" VerticalAlignment="Top" Width="229" SelectionChanged="InvoiceDateDropDown_SelectionChanged"/>
+        <ComboBox x:Name="InvoiceTotalChargeDropDown" HorizontalAlignment="Left" Margin="107,89,0,0" VerticalAlignment="Top" Width="229" SelectionChanged="InvoiceTotalChargeDropDown_SelectionChanged"/>
+        <ComboBox x:Name="InvoiceNumberDropDown" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="229" SelectionChanged="InvoiceNumberDropDown_SelectionChanged"/>
         <Label x:Name="InvoiceDateLabel" Content="Select Invoice Date" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Height="22" Width="92" FontSize="8px"/>
         <Label x:Name="InvoiceTotalChargeLabel" Content="Select Invoice Charge" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Height="22" Width="92" FontSize="8px"/>
         <Button x:Name="ClearInvoiceButton" Content="Clear" HorizontalAlignment="Left" Margin="174,318,0,0" VerticalAlignment="Top" Width="81" Click="ClearInvoiceButton_Click"/>

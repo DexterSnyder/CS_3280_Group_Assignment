@@ -68,6 +68,11 @@ namespace CS_3280_Group_Assignment.Search
         /// </summary>
         double invoiceCharge = 0.0;
 
+
+        /// <summary>
+        /// an Invoice object to help get some methods
+        /// </summary>
+        private Invoice inv;
         /// <summary>
         /// Get our clsSearchLogic class
         /// </summary>
@@ -77,6 +82,9 @@ namespace CS_3280_Group_Assignment.Search
 
         #region Methods
 
+        /// <summary>
+        /// Initialize/construtor
+        /// </summary>
         public wndSearch()
         {
             try
@@ -108,6 +116,10 @@ namespace CS_3280_Group_Assignment.Search
                 ///</summary>
                 db = new clsSearchSQL();
 
+                ///<summary>
+                ///this creates a new instance of our invoice class
+                /// </summary>
+                inv = new Invoice();
 
                 ///<summary>
                 ///initially load our invoice dates in our combo box
@@ -125,19 +137,20 @@ namespace CS_3280_Group_Assignment.Search
                 loadInvoiceCostsInComboBox();
 
                 ///<summary>
-                ///this will be used to bind to our list of invoices
+                ///this will be used to bind to our list of invoices and display it in our search window DataGrid
                 /// </summary>
-                DisplaySearchedInvoice.ItemsSource = clsSearchLogicInst.GetSearchedInvoices();
+                DisplaySearchedInvoice.ItemsSource = clsSearchLogicInst.GetInvoicesFromDataBase();
 
             }
             catch (Exception ex)
             {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
 
         }
 
-     
+
 
         /// <summary>
         /// The button that the user uses to select their invoice
@@ -148,28 +161,28 @@ namespace CS_3280_Group_Assignment.Search
         {
 
             //get the Main window
-           // wndMain main = new wndMain();
+            // wndMain main = new wndMain();
 
             //call the method to display the list of the searched for invoice
             //main.DisplaySearchedForInvoices(lstInvoices);
-           
+
 
             ///show the invoice that was searched for
-           // main.ShowDialog(); 
+            // main.ShowDialog(); 
         }
 
         private void ClearInvoiceButton_Click(object sender, RoutedEventArgs e)
         {
             //clear out the DataGrid
-           // DisplaySearchedInvoice.Items.Clear();
+            // DisplaySearchedInvoice.Items.Clear();
 
             //empty the invoices list, basically reset all the properties
             //lstInvoices.Clear();
 
             //reset all the combo boxes
-           // InvoiceDateDropDown.SelectedIndex = -1;
-           // InvoiceTotalChargeDropDown.SelectedIndex = -1;
-           // InvoiceNumberDropDown.SelectedIndex = -1; 
+            // InvoiceDateDropDown.SelectedIndex = -1;
+            // InvoiceTotalChargeDropDown.SelectedIndex = -1;
+            // InvoiceNumberDropDown.SelectedIndex = -1; 
         }
 
         /// <summary>
@@ -184,12 +197,13 @@ namespace CS_3280_Group_Assignment.Search
             {
                 DataGrid temp = (DataGrid)sender;
 
+                //if our selected item is not null
                 if (temp.SelectedItem == null)
                 {
-
-                     invoiceID = Convert.ToInt32(temp.SelectedCells[0]);
-                     invoiceDate = DateTime.Parse((temp.SelectedCells[1]).ToString());
-                     invoiceCharge = Convert.ToDouble(temp.SelectedCells[2]);
+                    //convert all our values to the necessary types
+                    invoiceID = Convert.ToInt32(temp.SelectedCells[0]);
+                    invoiceDate = DateTime.Parse((temp.SelectedCells[1]).ToString());
+                    invoiceCharge = Convert.ToDouble(temp.SelectedCells[2]);
 
                     //send data over to the list
                     clsSearchLogicInst.GetSearchedInvoices(invoiceID, invoiceDate, invoiceCharge);
@@ -197,7 +211,7 @@ namespace CS_3280_Group_Assignment.Search
                 }
                 else
                 {
-                    
+
                     throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + "DataGrid is NULL");
                 }
             }
@@ -207,11 +221,11 @@ namespace CS_3280_Group_Assignment.Search
                        MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
 
-               
-            
+
+
         }
 
-        #region ComboBoxes
+        #region ComboBoxes Methods
 
         /// <summary>
         /// when the user selects a specific invoiceID
@@ -349,6 +363,11 @@ namespace CS_3280_Group_Assignment.Search
             }
         }
 
+
+        private void LoadInvoicesIntoDataGrid()
+        {
+
+        }
         #endregion
         #endregion
 
