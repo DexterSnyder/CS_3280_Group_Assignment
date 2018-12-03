@@ -35,7 +35,7 @@ C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assign
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Items\wndItems.baml
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Search\wndSearch.g.cs
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Search\wndSearch.baml
-C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.csprojAssemblyReference.cache
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\App.baml
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\BureauBlack.baml
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\BureauBlue.baml
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\ExpressionDark.baml
@@ -43,4 +43,4 @@ C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assign
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\ShinyBlue.baml
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\ShinyRed.baml
 C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\Themes\WhistlerBlue.baml
-C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\App.baml
+C:\Users\dexte\OneDrive\Desktop\C#\CS_3280_Group_Assignment\CS_3280_Group_Assignment\obj\Debug\CS_3280_Group_Assignment.csprojAssemblyReference.cache

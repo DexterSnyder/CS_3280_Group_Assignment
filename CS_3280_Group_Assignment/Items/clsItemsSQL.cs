@@ -13,14 +13,6 @@ namespace CS_3280_Group_Assignment.Items
 {
     class clsItemsSQL
     {
-        private clsDataAccess db = new clsDataAccess();
-
-       
-
-        private OleDbCommand cmd;
-
-        private ArrayList items;
-
 
         /// <summary>
         /// initialize
@@ -29,7 +21,7 @@ namespace CS_3280_Group_Assignment.Items
         {
             try
             {
-                items = new ArrayList();
+                
             }
             catch (Exception ex)
             {
@@ -38,11 +30,13 @@ namespace CS_3280_Group_Assignment.Items
         }
 
         /// <summary>
-        /// get items
+        /// get items from database
         /// </summary>
         /// <returns>items</returns>
-        public ArrayList getItems()
+        public ObservableCollection<Item> getItems()
         {
+            ObservableCollection<Item> items = new ObservableCollection<Item>();
+            clsDataAccess db = new clsDataAccess();
             try
             {
                 DataSet ds;
@@ -71,15 +65,20 @@ namespace CS_3280_Group_Assignment.Items
             }
             return items;
         }
-
-        public void createItems(Item toAdd)
+        /// <summary>
+        /// insert item in database
+        /// </summary>
+        /// <param name="item"></param>
+        public void insertItems(Item item)
         {
             try
             {
+                clsDataAccess db = new clsDataAccess();
                 int iRef = 0;
-                string desc = toAdd.ItemDesc;
-                string cost = toAdd.Cost.ToString();
-                string query = "INSERT INTO Items(ItemDesc, Cost) Values(#" + desc + "#, " + cost + ");";
+                string code = item.ItemCode;
+                string desc = item.ItemDesc;
+                string cost = item.Cost.ToString();
+                string query = "INSERT INTO ItemDesc(ItemCode, ItemDesc, Cost) Values('" + code + "', '" + desc + "' , '" + cost + "' );";
 
                 iRef = db.ExecuteNonQuery(query);
             }
@@ -90,18 +89,89 @@ namespace CS_3280_Group_Assignment.Items
             }
 
         }
-
-
-        public void updateItem(Item toUpdate)
+        /// <summary>
+        /// delete item from database
+        /// </summary>
+        /// <param name="deleteItem"></param>
+        public void deletedItem(Item deleteItem)
         {
             try
             {
+                clsDataAccess db = new clsDataAccess();
                 int iRef = 0;
-                string code = toUpdate.ItemCode.ToString();
+                string code = deleteItem.ItemCode;
+                string deleteQuery;
+                deleteQuery = "DELETE FROM ItemDesc WHERE ItemCode = '" + code + "';";
+                iRef = db.ExecuteNonQuery(deleteQuery);
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+        /// <summary>
+        /// select used items in invoices from database
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public List<int> checkInvoice(Item item)
+        {
+            clsDataAccess db = new clsDataAccess();
+            List<int> invoiceNums = new List<int>();
+            string code = item.ItemCode;
+            DataSet ds = new DataSet();
+            string checkin;
+            int retVal = 0;
+            checkin = "SELECT DISTINCT InvoiceNum FROM LineItems WHERE ItemCode = '" +  code + "';";
+            ds = db.ExecuteSQLStatement(checkin, ref retVal);
+            foreach(DataRow dr in ds.Tables[0].Rows)
+            {
+                invoiceNums.Add(Convert.ToInt32(dr[0]));
+            }
+            return invoiceNums;
+        }
+        /// <summary>
+        /// check if item code is already used
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public string checkId(Item item)
+        {
+            try
+            {
+                clsDataAccess db = new clsDataAccess();
+                string code = item.ItemCode;
+                string checkid;
+                checkid = "SELECT ItemCode FROM ItemDesc WHERE ItemCode = '" + code + "';";
+                string result = db.ExecuteScalarSQL(checkid);
+                return result;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+            
+
+        }
+        /// <summary>
+        /// update item in database
+        /// </summary>
+        /// <param name="toUpdate"></param>
+        /// <param name="oldCode"></param>
+        public void updateItem(Item toUpdate, string oldCode)
+        {
+            try
+            {
+                clsDataAccess db = new clsDataAccess();
+                int iRef = 0;
+                string code = toUpdate.ItemCode;
                 string desc = toUpdate.ItemDesc;
                 string cost = toUpdate.Cost.ToString();
-                string query = "UPDATE Item SET itemDesc = #" + desc + "#, Cost = " + cost + " " +
-                    "WHERE ItemCode = " + code + ";";
+                string query = "UPDATE ItemDesc SET ItemCode = '" + code + "', ItemDesc = '" + desc + "', Cost = '" + cost + "' " +
+                    "WHERE ItemCode = '" + code + "';";
+                iRef = db.ExecuteNonQuery(query);
             }
             catch (Exception ex)
             {

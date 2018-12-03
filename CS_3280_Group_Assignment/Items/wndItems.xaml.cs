@@ -22,25 +22,31 @@ namespace CS_3280_Group_Assignment.Items
     public partial class wndItems : Window
     {
         /// <summary>
-        /// database access
+        /// items logic
         /// </summary>
-        private clsItemsSQL db;
-
-        /// <summary>
-        /// list of items
-        /// </summary>
-        private ArrayList items;
-
+        private clsItemsLogic itemLogic;
 
         /// <summary>
         /// If the user is editing an invoice
         /// </summary>
         private bool isEditing;
+        /// <summary>
+        /// an Item
+        /// </summary>
+        private Item item;
 
         /// <summary>
         /// If the user is adding an invoice
         /// </summary>
         private bool isAdding;
+
+        /// <summary>
+        /// if the user is deleting or not
+        /// </summary>
+        private bool isDeleting;
+        /// <summary>
+        /// Initializer
+        /// </summary>
         public wndItems()
         {
             try
@@ -49,9 +55,12 @@ namespace CS_3280_Group_Assignment.Items
 
                 isEditing = false;
                 isAdding = false;
-                items = new ArrayList();
-                db = new clsItemsSQL();
-
+                isDeleting = false;
+                itemLogic = new clsItemsLogic();
+                item = new Item();
+                ItemCodeTextBox.IsEnabled = false;
+                ItemDescriptionTextBox.IsEnabled = false;
+                ItemCostTextBox.IsEnabled = false;
                 loadItems();
             }
 
@@ -63,17 +72,15 @@ namespace CS_3280_Group_Assignment.Items
 
 
         }
-
+        /// <summary>
+        /// load the items on the data grid
+        /// </summary>
         private void loadItems()
         {
             try
             {
-                items = db.getItems();
-                foreach (Item item in items)
-                {
-                    ItemDataGrid.Items.Add(item);
-
-                }
+                
+                 ItemDataGrid.ItemsSource = itemLogic.items;
             }
             catch (Exception ex)
             {
@@ -81,20 +88,6 @@ namespace CS_3280_Group_Assignment.Items
             }
         }
 
-        /// <summary>
-        /// refresh items
-        /// </summary>
-        private void refreshItems()
-        {
-            try
-            {
-                loadItems();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
 
         /// <summary>
         /// add new items button
@@ -106,27 +99,63 @@ namespace CS_3280_Group_Assignment.Items
             try
             {
                 isAdding = true;
-
+                ItemCodeTextBox.IsEnabled = true;
+                ItemDescriptionTextBox.IsEnabled = true;
+                ItemCostTextBox.IsEnabled = true;
+                item.ItemCode = "";
+                item.ItemDesc = "";
+                item.Cost = 0;
             }
             catch (Exception ex)
             {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-
+        /// <summary>
+        /// when the edit item button is pressed enables the user to enter edit item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditItemButton_Click(object sender, RoutedEventArgs e)
         {
-
-
+            if (ItemDataGrid.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item to edit before clicking");
+            }
+            else
+            {
+                isEditing = true;
+                Item editItem = (Item)ItemDataGrid.SelectedItem;
+                ItemCodeTextBox.Text = editItem.ItemCode;
+                ItemDescriptionTextBox.Text = editItem.ItemDesc;
+                ItemCostTextBox.Text = editItem.Cost.ToString();
+                ItemDescriptionTextBox.IsEnabled = true;
+                ItemCostTextBox.IsEnabled = true;
+            }
+            
         }
-
+        /// <summary>
+        /// delete an item action
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteItemButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //get selection
-                //delete selection
-                refreshItems();
+                if (ItemDataGrid.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Please select an item to delete before clicking");
+                }
+                else
+                {
+                    isDeleting = true;
+                    Item deleteItem = (Item)ItemDataGrid.SelectedItem;
+                    ItemCodeTextBox.Text = deleteItem.ItemCode;
+                    ItemDescriptionTextBox.Text = deleteItem.ItemDesc;
+                    ItemCostTextBox.Text = deleteItem.Cost.ToString();
+                }
+                
             }
             catch (Exception ex)
             {
@@ -134,23 +163,79 @@ namespace CS_3280_Group_Assignment.Items
             }
         }
 
+        /// <summary>
+        /// Save click button method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //get the data
+                if(ItemCodeTextBox.Text == ""  || ItemCostTextBox.Text == "" || ItemDescriptionTextBox.Text == "")
+                {
+                    MessageBox.Show("Please provide an input for all textboxes");
+                    return;
+                }
+                
                 if (isAdding)
                 {
-                    //send SQL
+                    Item item = new Item();
                     isAdding = false;
-                    refreshItems();
+                    item.ItemCode = ItemCodeTextBox.Text;
+                    item.ItemDesc = ItemDescriptionTextBox.Text;
+                    item.Cost = Convert.ToDouble(ItemCostTextBox.Text);
+                    string anID = itemLogic.checkId(item);
+                    if(anID == "")
+                    {
+                        itemLogic.addNewItem(item);
+                        
+
+                        loadItems();
+                    }
+                    else
+                    {
+                        isAdding = true;
+                        MessageBox.Show("The Code you picked is already in use");
+                        return;
+                    }
+                   
                 }
                 if (isEditing)
                 {
-                    //send SQL
+                    Item editItem = (Item)ItemDataGrid.SelectedItem;
                     isEditing = false;
-                    refreshItems();
+                    string tempCode = editItem.ItemCode;
+                    editItem.ItemDesc = ItemDescriptionTextBox.Text;
+                    editItem.Cost = Convert.ToDouble(ItemCostTextBox.Text);
+                    itemLogic.EditItem(editItem, tempCode);
+                    
                 }
+
+                if (isDeleting)
+                {
+                    Item deleteItem = (Item)ItemDataGrid.SelectedItem;
+                    string deleteM = itemLogic.checkInvoiceItem(deleteItem);
+                    if(deleteM == "")
+                    {
+                        itemLogic.removeItem(deleteItem);
+                    }
+                    else
+                    {
+                        MessageBox.Show(deleteM);
+                    }
+                    isDeleting = false;
+                    
+                }
+                ItemCodeTextBox.IsEnabled = false;
+                ItemDescriptionTextBox.IsEnabled = false;
+                ItemCostTextBox.IsEnabled = false;
+                ItemCodeTextBox.Text = "";
+                ItemDescriptionTextBox.Text = "";
+                ItemCostTextBox.Text = "";
+                itemLogic.getItems();
+                loadItems();
+                
             }
 
             catch (Exception ex)
@@ -189,6 +274,24 @@ namespace CS_3280_Group_Assignment.Items
                 System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
                                              "HandleError Exception: " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Cancel click method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Cancel_Click(object sender, RoutedEventArgs e) {
+
+            ItemCodeTextBox.IsEnabled = false;
+            ItemDescriptionTextBox.IsEnabled = false;
+            ItemCostTextBox.IsEnabled = false;
+            isDeleting = false;
+            isEditing = false;
+            isAdding = false;
+            ItemCodeTextBox.Text = "";
+            ItemDescriptionTextBox.Text = "";
+            ItemCostTextBox.Text = "";
         }
     }
 }
