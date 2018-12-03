@@ -29,3 +29,10 @@
 *.cache
 *.lref
 *.ide-wal
+.vs/CS_3280_Group_Assignment/v15/.suo
+.vs/CS_3280_Group_Assignment/v15/.suo
+.vs/CS_3280_Group_Assignment/v15/Server/sqlite3/storage.ide-shm
+CS_3280_Group_Assignment/bin/Debug/CS_3280_Group_Assignment.exe
+*.pdb
+*.exe
+CS_3280_Group_Assignment/obj/Debug/CS_3280_Group_Assignment.pdb
